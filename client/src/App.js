@@ -25,7 +25,7 @@ function App() {
           <Sidebar />
         </div>
         <div className="catalogueBlock">
-          <Catalogue data={houses.houseData} />
+          <Catalogue data={data} />
         </div>
       </div>
     </div>
