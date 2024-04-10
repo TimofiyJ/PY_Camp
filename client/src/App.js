@@ -9,8 +9,6 @@ import React, { useState, useEffect } from "react";
 
 function App() {
   const [data, setData] = useState([{}]);
-
-  console.log("its here");
   useEffect(() => {
     fetch("http://localhost:5000/houses")
       .then((res) => res.json())
