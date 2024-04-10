@@ -1,0 +1,42 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: #00104B;
+}
+
+.sidebarBlock {
+    width: 20%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box; /* Щоб padding не додавався до загальної ширини */
+}
+
+.catalogueBlock {
+    width: 80%;
+    padding: 20px;
+    margin: 30px 30px 30px 30px;
+    box-sizing: border-box; /* Щоб padding не додавався до загальної ширини */
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #FAFBFC;
+    overflow-y: auto; /* Додали скрол */
+    height: 670px;
+}
+
+.catalogueBlock::-webkit-scrollbar {
+    width: 8px; /* ширина скролбару */
+    border-radius: 24px; /* радіус кутика скролбару */
+}
+
+.catalogueBlock::-webkit-scrollbar-track {
+    background: #F2F6F5; /* колір фону скролбару */
+}
+
+.catalogueBlock::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #D9DDE0; /* колір самого скролбару */
+    border-radius: 24px; /* радіус кутика скролбару */
+}

@@ -1,0 +1,6 @@
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Створює три колонки з однаковою шириною */
+    gap: 10px; /* Відстань між елементами гріду */
+    padding: 10px; /* Відступ всередині обгортки */
+}

@@ -1,0 +1,206 @@
+:root {
+    --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+    overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+    box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+    outline: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: relative;
+    min-width: 340px;
+    min-height: 420px; /* Змінили висоту на min-height */
+    margin: 0 auto;
+    background: #fafbfc;
+    border: 1px solid #e4e9ee;
+    border-radius: 24px;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.06);
+}
+
+.hr-divider {
+    width: 100%;
+    height: 0.5px;
+    background-color: #E4E9EE; /* Чорна риска */
+    padding: 0 0 0 0;
+    margin: 0 0 0 0; /* Налаштування відступів */
+    border: none; /* Видалення стандартних рамок */
+}
+
+.image-block {
+    align-self: stretch;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    width: auto;
+    height: 218px;
+    position: relative;
+    background: url(../../assets/image/trembita.jpg)
+    no-repeat center;
+    background-size: cover;
+}
+.frame-house-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 24px;
+    position: relative;
+    padding: 24px 24px 24px 24px;
+    z-index: 1;
+}
+.frame-house-name-places {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+}
+.frame-house-name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 8px;
+    position: relative;
+    z-index: 3;
+}
+.trembita {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 26px;
+    color: #181a1a;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 4;
+}
+
+.frame-house-places {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    width: 85px;
+    z-index: 6;
+}
+.frame-house-places-divider {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 4px;
+    position: relative;
+    width: 73px;
+    z-index: 7;
+}
+.user {
+    flex-shrink: 0;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    z-index: 8;
+    overflow: hidden;
+}
+.icon {
+    position: relative;
+    width: 17px;
+    height: 14px;
+    background: url(../../assets/image/person.png)
+    no-repeat center;
+    background-size: 100% 100%;
+    z-index: 9;
+}
+.span-misc {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 16px;
+    color: #181a1a;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    white-space: nowrap;
+    letter-spacing: 0.24px;
+    z-index: 10;
+}
+
+.button-frame {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    align-self: stretch;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 16px;
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    z-index: 12;
+}
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    gap: 8px;
+    position: relative;
+    padding: 10px 16px 10px 16px;
+    background: rgba(193, 219, 254, 0.3);
+    border: 1px solid #ffffff;
+    z-index: 13;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.view-text {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 20px;
+    color: #03597c;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 14;
+}

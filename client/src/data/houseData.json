@@ -1,0 +1,41 @@
+{
+  "houseData": [
+    {
+      "id": 1,
+      "houseName": "Трембіта",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "32"
+    },
+    {
+      "id": 2,
+      "houseName": "Маринка",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "32"
+    },
+    {
+      "id": 3,
+      "houseName": "Великий дзвіночок",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "30"
+    },
+    {
+      "id": 4,
+      "houseName": "Маленький дзвіночок",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "21"
+    },
+    {
+      "id": 5,
+      "houseName": "Росинка",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "35"
+    },
+    {
+      "id": 6,
+      "houseName": "Полонина",
+      "img": "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200",
+      "housePlaces": "33"
+    }
+
+  ]
+}

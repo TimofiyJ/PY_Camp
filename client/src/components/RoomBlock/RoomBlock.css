@@ -1,0 +1,292 @@
+:root {
+    --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+    overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+    box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+    outline: 0;
+}
+
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 8px;
+    position: relative;
+    min-width: 1054px;
+    min-height: 101px;
+    margin: 0 auto;
+    background: #fafbfc;
+    border: 1px solid #e4e9ee;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.06);
+}
+.image {
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    width: 261px;
+    min-height: 0;
+    /*background: url(../assets/images/75039225d140081001e79432477d1cafe802313a.png)*/
+    /*no-repeat center;*/
+    background-size: cover;
+    overflow: hidden;
+}
+.frame-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    gap: 8px;
+    position: relative;
+    height: 100px;
+    padding: 24px 24px 24px 24px;
+    z-index: 1;
+}
+.frame-2 {
+    flex-shrink: 0;
+    position: relative;
+    width: 738px;
+    height: 26px;
+    z-index: 2;
+}
+.button-view-room {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    position: relative;
+    left: 275px;
+    width: 95px;
+    margin: 40px 0 0 643px;
+    z-index: 3;
+    overflow: hidden;
+}
+.view-room {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 20px;
+    color: #03597c;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 4;
+}
+.flex-row-f {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    width: 738px;
+    height: 29px;
+    top: -2px;
+    left: 0;
+    z-index: 12;
+}
+.frame-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 8px;
+    position: relative;
+    width: 174px;
+    height: 29px;
+    z-index: 12;
+}
+.room-number {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    width: 167px;
+    height: 26px;
+    color: #1d2838;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 13;
+}
+.group {
+    flex-shrink: 0;
+    position: relative;
+    width: 171px;
+    height: 24px;
+    z-index: 5;
+    border-radius: 6px;
+}
+.floor-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 3px;
+    position: absolute;
+    width: 75px;
+    height: 24px;
+    top: 0;
+    left: 250px;
+    padding: 2px 9px 2px 9px;
+    cursor: pointer;
+    background: #27c28a;
+    border: none;
+    z-index: 6;
+    border-radius: 6px;
+}
+.floor-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 5px;
+    position: relative;
+    width: 58px;
+    z-index: 7;
+}
+.floor-number {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    width: 58px;
+    height: 20px;
+    color: #c3f4e3;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 8;
+}
+.tag-4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 3px;
+    position: absolute;
+    width: 91.607px;
+    height: 24px;
+    top: 0;
+    left: 350px;
+    padding: 2px 9px 2px 9px;
+    cursor: pointer;
+    background: #e9f2fd;
+    border: none;
+    z-index: 9;
+    border-radius: 6px;
+}
+.content-5 {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 5px;
+    position: relative;
+    width: 84px;
+    z-index: 10;
+}
+.balcony-exist {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    width: 84px;
+    height: 20px;
+    color: #268dd1;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 11;
+}
+.frame-6 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    width: 65px;
+    z-index: 14;
+}
+.frame-7 {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 4px;
+    position: relative;
+    width: 65px;
+    z-index: 15;
+}
+.user {
+    flex-shrink: 0;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    z-index: 16;
+    overflow: hidden;
+}
+.icon {
+    position: relative;
+    width: 12.667px;
+    height: 14px;
+    margin: 1px 0 0 1.667px;
+    /*background: url(../assets/images/540941f1-756d-4f10-9a13-c328e2251d6e.png)*/
+    /*no-repeat center;*/
+    background-size: 100% 100%;
+    z-index: 17;
+}
+.room-places {
+    flex-shrink: 0;
+    flex-basis: auto;
+    position: relative;
+    height: 16px;
+    color: #181a1a;
+    font-family: Poppins, var(--default-font-family);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    white-space: nowrap;
+    letter-spacing: 0.24px;
+    z-index: 18;
+}
