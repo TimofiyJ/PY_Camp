@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 import psycopg2
+from flask import request
+
 from config import host, user, password, db_name
 
 app = Flask(__name__)
@@ -36,14 +38,16 @@ def houses():
     connection, cursor = db_connect()
     cursor.execute('SELECT * FROM "House";')
     houses = cursor.fetchall()
-    print(houses[0])
+    arrival = request.args.get('arrival')
     response = []
     for house in houses:
         element = {}
         element["id"] = house[0]
         element["houseName"] = house[1]
         element["img"] = "https://a0.muscache.com/im/pictures/21f1bd4d-cac0-47a0-84d3-a6413f675003.jpg?im_w=1200"
-        element["housePlaces"] = 21
+        cursor.execute(f"SELECT * FROM gethousebeds('{house[1]}')")
+        element["housePlaces"] = cursor.fetchone()[0]
+        cursor.execute(f"SELECT * FROM gethouseresidents({arrival},'{house[1]}')")
         response.append(element)
     db_close(connection, cursor)
     return response
