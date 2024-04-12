@@ -1,7 +1,7 @@
 import {RoomBlock} from "../RoomBlock/RoomBlock";
 import './RoomCatalogue.css';
 
-export const Catalogue = ({data}) => {
+export const RoomCatalogue = ({data}) => {
 
     return (
         <div>

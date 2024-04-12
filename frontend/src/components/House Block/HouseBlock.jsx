@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './HouseBlock.css';
 export const HouseBlock = ({data}) => {
     return (
@@ -24,11 +25,11 @@ export const HouseBlock = ({data}) => {
                     </div>
                 </div>
                 <hr className="hr-divider"/>
-                <button className='button-frame'>
-                    <div className='button'>
-                        <span className='view-text'>Переглянути</span>
-                    </div>
-                </button>
+                <Link to={`/rooms/${data.id}`} className='button-frame'>
+                        <div className='button'>
+                            <span className='view-text'>Переглянути</span>
+                        </div>
+                </Link>
             </div>
         </div>
     );
