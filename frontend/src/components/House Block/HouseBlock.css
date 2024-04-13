@@ -6,8 +6,13 @@
 }
 
 .main-container {
-    overflow: hidden;
-}
+    display: flex;
+    align-items: center;
+    max-width: 300px;  /* Adjust this if needed */
+    margin: 0 auto;
+    padding: 20px; /* Add padding for spacing */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+  }
 
 .main-container,
 .main-container * {
@@ -58,17 +63,9 @@ button {
     background-size: cover;
 }
 .frame-house-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: stretch;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
-    gap: 24px;
-    position: relative;
-    padding: 24px 24px 24px 24px;
-    z-index: 1;
-}
+    flex-grow: 1; /* Allow the info section to grow and take up remaining space */
+  }
+  
 .frame-house-name-places {
     display: flex;
     flex-direction: column;
@@ -191,16 +188,19 @@ button {
     border-radius: 8px;
 }
 .view-text {
-    flex-shrink: 0;
-    flex-basis: auto;
-    position: relative;
-    height: 20px;
-    color: #03597c;
-    font-family: Poppins, var(--default-font-family);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 14;
-}
+    width: 120px; /* Set a specific width for the button */
+    text-align: center; /* Center the text horizontally */
+    padding: 10px; /* Add padding for better appearance */
+    border: none; /* Remove default button border */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+
+.house-image {
+    width: 120px; /* Adjust the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 20px; /* Add some spacing between the image and other elements */
+  }

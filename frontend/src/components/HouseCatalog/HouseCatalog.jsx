@@ -4,7 +4,7 @@ import './HouseCatalog.css';
 export const Catalogue = ({data}) => {
 
     return (
-        <div>
+        <div className="catalogue-container">
             <div className="houses-grid">
                 {data.map((house, idx) => (
                     <HouseBlock
