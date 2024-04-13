@@ -1,18 +1,14 @@
-import {HouseBlock} from "../House Block/HouseBlock";
-import './HouseCatalog.css';
+import { HouseBlock } from "../HouseBlock/HouseBlock";
+import "./HouseCatalog.css";
 
-export const Catalogue = ({data}) => {
-
-    return (
-        <div className="catalogue-container">
-            <div className="houses-grid">
-                {data.map((house, idx) => (
-                    <HouseBlock
-                        key={idx}
-                        data={house}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-}
+export const Catalogue = ({ data }) => {
+  return (
+    <div>
+      <div className="houses-grid">
+        {data.map((house, idx) => (
+          <HouseBlock key={idx} data={house} />
+        ))}
+      </div>
+    </div>
+  );
+};

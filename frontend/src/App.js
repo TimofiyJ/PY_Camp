@@ -1,28 +1,25 @@
-import React, { useState, useEffect,useRef  } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HouseBlock } from "./components/HouseBlock/HouseBlock";
+import houses from "../src/data/houseData.json";
 import { Catalogue } from "./components/HouseCatalog/HouseCatalog";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import "./pages/HousePage.css";
-import { HouseBlock } from "./components/House Block/HouseBlock";
+// import {Catalogue} from "./components/RoomCatalogue/RoomCatalogue";
+import rooms from "../src/data/roomData.json";
+import React, { useState, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { RoomCatalogue } from "./components/RoomCatalogue/RoomCatalogue";
+
 
 function App() {
   const [data, setData] = useState([{}]);
-  const isInitialMount = useRef(true);
-
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      console.log("Effect running...");
-      fetch("http://localhost:5000/houses?arrival=1")
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-          console.log(data);
-        });
-    }
+    fetch("http://localhost:5000/houses?arrival=1")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      });
   }, []);
-
 
   return (
     <div className="page">

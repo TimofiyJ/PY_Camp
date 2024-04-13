@@ -1,11 +1,6 @@
-
-  
-  .houses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Adjust the column width as needed */
-    gap: 20px; /* Add gap between grid items */
-  }
-  
-  .house-block-container {
-    width: 100%; /* Ensure each HouseBlock does not exceed the width of its container */
-  }
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Створює три колонки з однаковою шириною */
+  gap: 20px; /* Відстань між елементами гріду */
+  padding: 10px; /* Відступ всередині обгортки */
+}
