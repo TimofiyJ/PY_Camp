@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 
 export const RoomCatalogue = ({}) => {
     const [roomdata, setData] = useState([]);
-    const { houseId } = useParams(); // Get houseId from URL
+    let { house } = useParams(); // Get houseId from URL
+    console.log(house)
     console.log("hello from rooms")
     useEffect(() => {
-        fetch("http://localhost:5000/rooms?house=${houseId}")
+        fetch(`http://localhost:5000/rooms?house=${house}`)
           .then((res) => {
             if (!res.ok) {
               throw new Error(`HTTP error! Status: ${res.status}`);
@@ -22,7 +23,7 @@ export const RoomCatalogue = ({}) => {
           .catch((error) => {
             console.error("Fetch error:", error);
           });
-    }, [houseId]); // Re-run effect when houseId changes
+    }, [house]); // Re-run effect when houseId changes
 
     return (
         <div>
