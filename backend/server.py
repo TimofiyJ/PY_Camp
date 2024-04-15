@@ -52,6 +52,21 @@ def houses():
     db_close(connection, cursor)
     return response
 
+# Rooms API route
+@app.route("/rooms")
+def rooms():
+    print("At rooms")
+    connection, cursor = db_connect()
+    house_id = request.args.get('house')
+    cursor.execute(f'SELECT * \
+                   FROM "House"\
+                   INNER JOIN "Room" ON "Room"."houseId"="House".id\
+                   WHERE "House".id = {house_id};')
+    rooms = cursor.fetchall()
+    arrival = request.args.get('arrival')
+    print(rooms)
+    return rooms
+
 
 if __name__ == "__main__":
     app.run(debug=True)
