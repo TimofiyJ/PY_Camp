@@ -2,6 +2,7 @@ import React from 'react';
 import './RoomBlock.css';
 
     export const RoomBlock = ({data}) => {
+        console.log(data);
         return (
             <div className='main-container'>
                 <div className='image'/>
@@ -12,7 +13,7 @@ import './RoomBlock.css';
                         </div>
                         <div className='flex-row-f'>
                             <div className='frame-3'>
-                                <span className='room-number'>{data.roomName}</span>
+                                <span className='room-number'>Кімната {data[1]}</span>
                             </div>
                             <div className='group'>
                                 <button className='floor-tag'>
@@ -33,7 +34,7 @@ import './RoomBlock.css';
                             <div className='user'>
                                 <div className='icon'/>
                             </div>
-                            <span className='room-places'>{data.roomPlaces} місць</span>
+                            <span className='room-places'>{data[5]} місць</span>
                         </div>
                     </div>
                 </div>

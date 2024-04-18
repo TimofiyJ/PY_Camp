@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sidebar } from "../components/Sidebar/Sidebar";
-import { Catalogue } from "../components/HouseCatalog/HouseCatalog";
+import {Catalogue, HouseCatalogue} from "../components/HouseCatalog/HouseCatalog";
 import { HouseBlock } from "../components/HouseBlock/HouseBlock";
 import "./HousePage.css";
 // import {Catalogue} from "./components/RoomCatalogue/RoomCatalogue";
@@ -13,7 +13,7 @@ export const HomePage = () => {
          <Sidebar />
      </div>
      <div className="catalogueBlock">
-        <Catalogue/>
+        <HouseCatalogue/>
      </div>
  </div>
   )

@@ -6,15 +6,20 @@ import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
 import { RoomCatalogue } from "./components/RoomCatalogue/RoomCatalogue";
 import { HomePage } from "./pages/HomePage";
+import {RoomPage} from "./pages/RoomPage";
+import {ChildrenPage} from "./pages/ChildrenPage";
+import {SupervisorPage} from "./pages/SupervisorPage";
 
 function App() {
 
   return (
-    <div className='main-container'>
+    <div className='page'>
       <BrowserRouter>
           <Routes>
               <Route path='/' element={<HomePage/>}></Route>
-              <Route path="/rooms/:house" element={<RoomCatalogue/>} />
+              <Route path="/rooms/:house" element={<RoomPage/>} />
+              <Route path="/childrens" element={<ChildrenPage/>} />
+              <Route path='/supervisors' element={<SupervisorPage/>}></Route>
           </Routes>
       </BrowserRouter>
     </div>
