@@ -3,22 +3,35 @@
   grid-template-columns: repeat(3, 1fr); /* Створює три колонки з однаковою шириною */
   gap: 20px; /* Відстань між елементами гріду */
   padding: 10px; /* Відступ всередині обгортки */
-}
-.button-right-top {
-  position: fixed;
-  top: 20px; /* Відступ від верхнього краю */
-  right: 20px; /* Відступ від правого краю */
-  padding: 10px 20px; /* Величина внутрішнього відступу */
-  background-color: #1D2E54; /* Колір фону кнопки */
-  color: #ffffff; /* Колір тексту кнопки */
-  border: none; /* Видалення границі */
-  border-radius: 8px; /* Радіус кутів */
-  font-size: 16px; /* Розмір шрифту */
-  cursor: pointer; /* Курсор при наведенні */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тінь */
-  transition: background-color 0.3s ease; /* Анімація зміни коліру фону */
+  overflow-y: scroll;
+  max-height: 540px;
 }
 
+.button-container {
+  position: relative;
+  height: 50px;
+  z-index: 1;
+  margin-left: 790px;
+}
+
+.button-right-top {
+  padding: 10px;
+  background-color: #1D2E54;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  width: 150px;
+  position: absolute;
+  right: 0;
+}
 .button-right-top:hover {
-  background-color: #2d3e66; /* Колір фону кнопки при наведенні */
+  background-color: #2d3e66;
+}
+
+.houses-container {
+  position: relative; /* Додайте позицію relative для правильної роботи кнопки */
 }
