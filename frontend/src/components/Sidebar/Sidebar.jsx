@@ -1,4 +1,5 @@
 import "./Sidebar.css"
+import {Link} from "react-router-dom";
 export const Sidebar = () => {
   return (
       <div className="nav-sidebar">
@@ -12,7 +13,7 @@ export const Sidebar = () => {
                   <div className='nav-button-users'>
                       <div className='nav-icon'/>
                   </div>
-                  <span className='nav-text'>Будинки</span>
+                  <Link to='/'className='nav-text'>Будинки</Link>
               </div>
           </div>
           <div className='nav-item-dropdown'>
@@ -22,7 +23,7 @@ export const Sidebar = () => {
                           <div className='nav-button-list'>
                               <div className='nav-icon-3'/>
                           </div>
-                          <span className='nav-text-4'>Діти</span>
+                          <Link to='/childrens' className='nav-text-4'>Діти</Link>
                       </div>
                   </div>
               </div>
@@ -32,7 +33,7 @@ export const Sidebar = () => {
                   <div className='nav-button-layers-two'>
                       <div className='nav-icon-7'/>
                   </div>
-                  <span className='nav-text-8'>Вихователі</span>
+                  <Link to='/supervisors' className='nav-text-8'>Вихователі</Link>
               </div>
           </div>
           <div className='nav-item-base-9'>

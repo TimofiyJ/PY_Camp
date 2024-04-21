@@ -1,0 +1,26 @@
+/* Filter.css */
+
+.dropdown {
+    width: 175px; /* Зменшення ширини дропдауну */
+    height: 40px;
+    font-size: 12px;
+}
+
+.MuiMenuItem-root {
+    font-size: 12px; /* Зменшення розміру тексту в елементах дропдауну */
+}
+
+.arrival-dropdown {
+    padding: 10px;
+    margin-bottom: 30px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 170px;
+    position: absolute;
+    left: 0;
+}
+
