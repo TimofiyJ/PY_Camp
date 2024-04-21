@@ -7,6 +7,7 @@ import './ChildrenPage.css'; // Імпорт CSS файлу для стиліз�
 
 const theme = createTheme(); // Створено тему
 
+
 export const RoomChildrenPage = () => {
     return (
         <ThemeProvider theme={theme}>
