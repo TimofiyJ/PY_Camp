@@ -10,72 +10,90 @@ import TableRow from '@mui/material/TableRow';
 import {useContext} from 'react';
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
     {
-        id: 'population',
-        label: 'Population',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
+        id: 'surname',
+        label: <b style={{ color: '#1D2E54'}}>Прізвище</b>, // Встановлення коліру тексту та фону
+        minWidth: 120,
+    },
+
+    {   id: 'name',
+        label: <b style={{ color: '#1D2E54'}}>Ім’я</b>,
+        minWidth: 120
     },
     {
-        id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
+        id: 'gender',
+        label: <b style={{ color: '#1D2E54'}}>Стать</b>,
+        minWidth: 100,
+        align: 'center',
     },
     {
-        id: 'density',
-        label: 'Density',
-        minWidth: 170,
-        align: 'right',
-        format: (value) => value.toFixed(2),
+        id: 'birthday',
+        label: <b style={{ color: '#1D2E54'}}>Дата народження</b>,
+        minWidth: 150,
+    },
+    {
+        id: 'address',
+        label: <b style={{ color: '#1D2E54'}}>Адреса</b>,
+        minWidth: 100,
+    },
+    {
+        id: 'house',
+        label: <b style={{ color: '#1D2E54'}}>Будинок</b>,
+        minWidth: 75,
+    },
+    {
+        id: 'room',
+        label: <b style={{ color: '#1D2E54'}}>Кімната</b>,
+        minWidth: 75,
+    },
+    {
+        id: 'action',
+        label: '',
+        minWidth: 100,
+        color: '#1D2E54',
     },
 ];
 
-function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
+function createData(surname, name, gender, birthday, address, house, room, action) {
+    return { surname, name, gender, birthday, address, house, room, action };
 }
 
 const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),
+    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути'),    createData('Хомин', 'Вероніка', 'жінка', '17.10.2004', 'м.Львів', 'Трембіта',
+        4, 'Переглянути')
+
 ];
 
 export const ChildCatalogue = () => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
     return (
         <div className="contaner-with-table">
-            <div> сьорч </div>
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+            <Paper sx={{minWidth: 1134, overflow: 'hidden' }}>
+                <TableContainer sx={{ maxHeight: 550, minWidth: 1134 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -92,7 +110,6 @@ export const ChildCatalogue = () => {
                         </TableHead>
                         <TableBody>
                             {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
@@ -112,15 +129,6 @@ export const ChildCatalogue = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 40, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
             </Paper>
         </div>
     );

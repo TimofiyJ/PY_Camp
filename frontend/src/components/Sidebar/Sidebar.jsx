@@ -13,7 +13,7 @@ export const Sidebar = () => {
                   <div className='nav-button-users'>
                       <div className='nav-icon'/>
                   </div>
-                  <span className='nav-text'>Будинки</span>
+                  <Link to='/'className='nav-text'>Будинки</Link>
               </div>
           </div>
           <div className='nav-item-dropdown'>

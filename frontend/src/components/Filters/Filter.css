@@ -1,0 +1,17 @@
+/* Filter.css */
+
+.dropdown {
+    width: 175px; /* Зменшення ширини дропдауну */
+    height: 40px;
+    font-size: 12px;
+}
+
+.MuiMenuItem-root {
+    font-size: 12px; /* Зменшення розміру тексту в елементах дропдауну */
+}
+
+.search-field {
+
+}
+
+

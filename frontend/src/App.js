@@ -9,6 +9,7 @@ import { HomePage } from "./pages/HomePage";
 import {RoomPage} from "./pages/RoomPage";
 import {ChildrenPage} from "./pages/ChildrenPage";
 import {SupervisorPage} from "./pages/SupervisorPage";
+import {RoomChildrenPage} from "./pages/RoomChildrenPage";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Routes>
               <Route path='/' element={<HomePage/>}></Route>
               <Route path="/rooms/:house" element={<RoomPage/>} />
+              <Route path="/roomChildren/:rooms/:house" element={<RoomChildrenPage/>} />
               <Route path="/childrens" element={<ChildrenPage/>} />
               <Route path='/supervisors' element={<SupervisorPage/>}></Route>
           </Routes>
