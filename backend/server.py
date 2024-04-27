@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 import psycopg2
 from flask import request
-
+from models import House,Child
 from config import host, user, password, db_name
 
 app = Flask(__name__)
@@ -10,6 +10,17 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
+def algorithm():
+    connection, cursor = db_connect()
+    cursor.execute('SELECT name FROM "House";')
+    houses_names = cursor.fetchall()
+    houses = []
+    print(houses_names)
+    for house in houses_names:
+        cursor.execute(f"SELECT gethousebeds('{house[0]}')")
+        houses.append(House(cursor.fetchone()[0], house[0]))
+    
+    db_close(connection, cursor)
 # DONT FORGET TO USE COMMITS IN CONNECTION
 def db_connect():
     try:
@@ -91,6 +102,7 @@ def get_arrivals():
         response.append(element)
     db_close(connection, cursor)
     return response
+
 
 
 if __name__ == "__main__":
