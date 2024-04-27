@@ -1,0 +1,36 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: #00104B;
+}
+
+.sidebarBlock {
+    flex: 1;
+    max-width: 20%;
+    height: 650px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.catalogueBlock {
+    flex: 3;
+    max-width: 80%;
+    padding: 20px;
+    margin: 30px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: #FAFBFC;
+    overflow-y: auto;
+    height: 650px;
+}
+
+.catalogueBlock::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-container {
+    display: flex; /* Застосовуємо flexbox */
+    align-items: center; /* Вирівнюємо елементи по вертикалі */
+    margin-bottom: 10px;
+}
