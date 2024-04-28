@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -90,6 +90,15 @@ const rows = [
 ];
 
 export const ChildCatalogue = () => {
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        fetch("http://localhost:5000/allchildren/1")
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, []);
     return (
         <div className="contaner-with-table">
             <Paper sx={{minWidth: 1134, overflow: 'hidden' }}>
@@ -109,7 +118,7 @@ export const ChildCatalogue = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
+                            {data
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
