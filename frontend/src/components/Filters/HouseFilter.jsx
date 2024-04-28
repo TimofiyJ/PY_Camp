@@ -1,13 +1,23 @@
-import React from 'react';
+import React,  { useState, useEffect }  from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import './Filter.css'; // Імпорт CSS файлу для стилізації
 
-export const HouseDropdown = () => {
+export const HouseDropdown = ({onHouseChange}) => {
     const [house, setHouse] = React.useState('');
-
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        fetch("http://localhost:5000/houses-filter")
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, []);
     const handleChange = (event) => {
         setHouse(event.target.value);
+        onHouseChange(event.target.value);
+
     };
 
     return (
@@ -24,10 +34,11 @@ export const HouseDropdown = () => {
                 <MenuItem value="" disabled>
                     Оберіть будинок
                 </MenuItem>
-                <MenuItem value="trembita">Трембіта</MenuItem>
-                <MenuItem value="marunka">Маринка</MenuItem>
-                <MenuItem value="polonuna">Полонина</MenuItem>
-                <MenuItem value="rosunka">Росинка</MenuItem>
+                {data.map((house, index) => (
+                    <MenuItem key={index} value={house.houseName}>
+                        {`${house.houseName}`}
+                    </MenuItem>
+                ))}
             </Select>
         </div>
     );
