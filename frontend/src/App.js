@@ -10,6 +10,7 @@ import {RoomPage} from "./pages/RoomPage";
 import {ChildrenPage} from "./pages/ChildrenPage";
 import {SupervisorPage} from "./pages/SupervisorPage";
 import {RoomChildrenPage} from "./pages/RoomChildrenPage";
+import {ChildProfilePage} from "./pages/ChildProfilePage";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/roomChildren/:rooms/:house" element={<RoomChildrenPage/>} />
               <Route path="/childrens" element={<ChildrenPage/>} />
               <Route path='/supervisors' element={<SupervisorPage/>}></Route>
+              <Route path='/childProfile' element={<ChildProfilePage/>}></Route>
           </Routes>
       </BrowserRouter>
     </div>

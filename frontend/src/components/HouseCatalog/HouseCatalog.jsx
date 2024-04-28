@@ -19,7 +19,7 @@ export const HouseCatalogue = () => {
         <div className="houses-container">
             <div className="button-container">
                 <button className="button-right-top">Поселити дітей</button>
-                <ArrivalDropdown />
+                <ArrivalDropdown/>
             </div>
 
             <div className="houses-grid">

@@ -1,11 +1,19 @@
-import React from 'react';
+import React,  { useState, useEffect }  from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import './Filter.css'; // Імпорт CSS файлу для стилізації
 
 export const ArrivalDropdown = () => {
     const [arrival, setArrival] = React.useState('');
-
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        fetch("http://localhost:5000/arrivals")
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, []);
     const handleChange = (event) => {
         setArrival(event.target.value);
     };
@@ -19,14 +27,14 @@ export const ArrivalDropdown = () => {
                 inputProps={{id: 'arrival-select'}}
                 className="arrival-dropdown" // Додано клас для стилізації
             >
-
-                <MenuItem value="" disabled>
+                 <MenuItem value="" disabled>
                     Оберіть заїзд
                 </MenuItem>
-                <MenuItem value="10-12червня">10-12 червня</MenuItem>
-                <MenuItem value="2-12липня">2-12 липня</MenuItem>
-                <MenuItem value="20-30липня">20-30 липня</MenuItem>
-                <MenuItem value="5-15серпня">5-15 серпня</MenuItem>
+                {data.map((arrival, index) => (
+                    <MenuItem key={index} value={arrival.beginningDate}>
+                        {`${arrival.beginningDate} - ${arrival.endDate}`}
+                    </MenuItem>
+                ))}
             </Select>
         </div>
     );
