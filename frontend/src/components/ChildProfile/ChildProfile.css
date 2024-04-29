@@ -1,18 +1,94 @@
-/* InputStyles.css */
-
-.input-container {
+.child-profile-container {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
 }
 
 .input-wrapper {
-    margin-right: 20px;
-    margin-bottom: 20px;
+    width: 100%;
+}
+.column-input {
+    width: 33%;
 }
 
-.text-above-input {
+.input-label {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
-    color: #333;
+    font-weight: bold;
+}
+
+.row-of-inputs{
+    display: flex;
+    flex-direction: row; /* Вирівнювання дочірніх елементів в рядок */
+    justify-content: space-between; /* Центрування елементів по горизонталі */
+    align-items: flex-start; /* Центрування елементів по вертикалі */
+    gap: 100px;
+}
+.first_column-inputs{
+    width: 33%;
+}
+.second-column-inputs{
+    width: 33.3%;
+}
+.third-column-inputs{
+    width: 33.3%;
+}
+.input-container{
+    justify-content: center; /* Центрування елементів по горизонталі */
+    align-items: flex-start; /* Центрування елементів по вертикалі */
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.header{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 50px;
+}
+.text-above-input{
+    font-weight: bold;
+}
+
+.button-container {
+    position: relative;
+    height: 50px;
+    z-index: 1;
+    margin-left: 790px;
+}
+
+.button-right-down {
+    padding: 10px;
+    background-color: #1D2E54;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    width: 150px;
+    position: absolute;
+    right: 0;
+    margin-top: 150px;
+}
+.button-right-down:hover {
+    background-color: #2d3e66;
+}
+.button-right-down-ok {
+    padding: 10px;
+    background-color: #1D2E54;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    width: 75px;
+    position: absolute;
+    right: 0;
+    margin-top: 140px;
+}
+.button-right-down-ok:hover {
+    background-color: #2d3e66;
 }

@@ -23,7 +23,7 @@ function App() {
               <Route path="/roomChildren/:rooms/:house" element={<RoomChildrenPage/>} />
               <Route path="/childrens" element={<ChildrenPage/>} />
               <Route path='/supervisors' element={<SupervisorPage/>}></Route>
-              <Route path='/childProfile' element={<ChildProfilePage/>}></Route>
+              <Route path='/childProfile/:id' element={<ChildProfilePage/>}></Route>
           </Routes>
       </BrowserRouter>
     </div>
