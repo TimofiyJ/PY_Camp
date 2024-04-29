@@ -1,13 +1,14 @@
-import React from 'react';
+import React,  { useState, useEffect }  from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import './Filter.css'; // Імпорт CSS файлу для стилізації
 
-export const AgeDropdown = () => {
+export const AgeDropdown = ({onAgeChange}) => {
     const [age, setAge] = React.useState('');
-
     const handleChange = (event) => {
         setAge(event.target.value);
+        onAgeChange(event.target.value);
+
     };
 
     return (
@@ -24,10 +25,9 @@ export const AgeDropdown = () => {
                 <MenuItem value="" disabled>
                     Оберіть вік
                 </MenuItem>
-                <MenuItem value="6-9years">6-9 років</MenuItem>
-                <MenuItem value="10-12years">10-12 років</MenuItem>
-                <MenuItem value="13-15years">13-15 років</MenuItem>
-                <MenuItem value="15-17years">15-17 років</MenuItem>
+                <MenuItem value="6">6-9 років</MenuItem>
+                <MenuItem value="10">10-13 років</MenuItem>
+                <MenuItem value="13">13-16 років</MenuItem>
             </Select>
         </div>
     );

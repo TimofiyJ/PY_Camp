@@ -90,16 +90,32 @@ const rows = [
 
 ];
 
-export const ChildCatalogue = () => {
+export const ChildCatalogue = ({ selectedGender, selectedAddress, selectedAge, selectedHouse, selectedRoom}) => {
+
     const [data, setData] = useState([{}]);
     useEffect(() => {
-        fetch("http://localhost:5000/allchildren/1")
-            .then((res) => res.json())
-            .then((data) => {
-                setData(data);
-                console.log(data);
-            });
-    }, []);
+        const filters = {
+            gender_filter: selectedGender,
+            address_filter: selectedAddress,
+            age_filter: selectedAge,
+            house_filter: selectedHouse,
+            room_filter: selectedRoom
+        };
+
+        fetch("http://localhost:5000/allchildren/1", {
+            method: 'POST', // or 'PUT', 'DELETE', etc. depending on your server endpoint
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filters)
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            setData(data);
+            console.log(data);
+        });
+    }, [selectedGender, selectedAddress, selectedAge, selectedHouse, selectedRoom]);
+    
     return (
         <div className="contaner-with-table">
             <Paper sx={{minWidth: 1134, overflow: 'hidden' }}>
