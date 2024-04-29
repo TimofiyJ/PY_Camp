@@ -1,13 +1,22 @@
-import React from 'react';
+import React,  { useState, useEffect }  from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import './Filter.css'; // Імпорт CSS файлу для стилізації
 
-export const AddressDropdown = () => {
+export const AddressDropdown = ({onAddressChange}) => {
     const [address, setAddress] = React.useState('');
-
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        fetch("http://localhost:5000/address-filter")
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, []);
     const handleChange = (event) => {
         setAddress(event.target.value);
+        onAddressChange(event.target.value);
     };
 
     return (
@@ -24,11 +33,11 @@ export const AddressDropdown = () => {
                 <MenuItem value="" disabled>
                     Оберіть адресу
                 </MenuItem>
-                <MenuItem value="lviv">Львів</MenuItem>
-                <MenuItem value="kyiv">Київ</MenuItem>
-                <MenuItem value="sambir">Самбір</MenuItem>
-                <MenuItem value="drogobych">Дрогобич</MenuItem>
-                <MenuItem value="other">Інші міста</MenuItem>
+                {data.map((address, index) => (
+                    <MenuItem key={index} value={address.name}>
+                        {`${address.name}`}
+                    </MenuItem>
+                ))}
             </Select>
         </div>
     );

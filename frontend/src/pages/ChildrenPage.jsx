@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import { HouseBlock } from "../components/HouseBlock/HouseBlock";
 import { ChildCatalogue } from "../components/ChildCatalogue/ChildCatalogue";
@@ -14,6 +14,28 @@ import { RoomDropdown } from '../components/Filters/RoomFilter'; // Шлях д�
 const theme = createTheme(); // Створено тему
 
 export const ChildrenPage = () => {
+    const [selectedGender, setSelectedGender] = useState(''); // State for selected gender
+    const [selectedAddress, setSelectedAddress] = useState('');
+    const [selectedAge, setSelectedAge] = useState('');
+    const [selectedHouse, setSelectedHouse] = useState('');
+    const [selectedRoom, setSelectedRoom] = useState('');
+
+    const handleGenderChange = (selectedGender) => {
+        setSelectedGender(selectedGender);
+    };
+    const handleAddressChange = (selectedAddress) => {
+        setSelectedAddress(selectedAddress);
+    };
+    const handleAgeChange = (selectedAge) => {
+        setSelectedAge(selectedAge);
+    };
+    const handleHouseChange = (selectedHouse) => {
+        setSelectedHouse(selectedHouse);
+    };
+    const handleRoomChange = (selectedRoom) => {
+        setSelectedRoom(selectedRoom);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <div className="page">
@@ -23,15 +45,21 @@ export const ChildrenPage = () => {
                 <div className="catalogueBlock">
                     <div className="filter-container"> {/* Додано відступ для кращого розділення */}
                         <SearchField />
-                        <GenderDropdown /> {/* Вставлення дропдауну */}
-                        <AgeDropdown />
-                        <AddressDropdown />
-                        <HouseDropdown />
-                        <RoomDropdown />
+                        <GenderDropdown onGenderChange={handleGenderChange} />
+                        <AgeDropdown onAgeChange={handleAgeChange} />
+                        <AddressDropdown onAddressChange={handleAddressChange}/>
+                        <HouseDropdown  onHouseChange={handleHouseChange}/>
+                        <RoomDropdown  onRoomChange={handleRoomChange} selectedHouse={selectedHouse}/>
                     </div>
-                    <ChildCatalogue />
+                    <ChildCatalogue 
+                        selectedGender={selectedGender}
+                        selectedAddress={selectedAddress}
+                        selectedAge={selectedAge}
+                        selectedHouse={selectedHouse}
+                        selectedRoom={selectedRoom} />
                 </div>
             </div>
         </ThemeProvider>
     );
+
 };
