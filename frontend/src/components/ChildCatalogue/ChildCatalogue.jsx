@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import {useContext} from 'react';
+import {Link} from "react-router-dom";
 
 const columns = [
     {
@@ -142,9 +143,11 @@ export const ChildCatalogue = ({ selectedGender, selectedAddress, selectedAge, s
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
+                                                        {column.id === 'action' ? (
+                                                            <Link to={`/childProfile/${row.id}`}>Переглянути</Link> // Посилання для переходу на child/id
+                                                        ) : (
+                                                            value
+                                                        )}
                                                     </TableCell>
                                                 );
                                             })}
