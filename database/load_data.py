@@ -187,7 +187,7 @@ client_bedId = []
 client_contactId = []
 client_detachmentId = []
 
-client_cid = 1
+client_cid = 0
 alergies = ["fur", "orange", "apple"]
 preferences = ["more football", "tasty food", "more sleep", "computer games"]
 
