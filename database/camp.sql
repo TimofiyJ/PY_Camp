@@ -221,14 +221,8 @@ ALTER TABLE public."House" OWNER TO postgres;
 -- Name: HouseSupervisor; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."HouseSupervisor" (
-    id integer NOT NULL,
-    "houseId" integer NOT NULL,
-    "supervisorId" integer NOT NULL
-);
 
 
-ALTER TABLE public."HouseSupervisor" OWNER TO postgres;
 
 --
 -- Name: Room; Type: TABLE; Schema: public; Owner: postgres
@@ -250,15 +244,9 @@ ALTER TABLE public."Room" OWNER TO postgres;
 -- Name: Spending; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."Spending" (
-    id integer NOT NULL,
-    name text NOT NULL,
-    value double precision DEFAULT 0,
-    "arrivalId" integer NOT NULL
-);
 
 
-ALTER TABLE public."Spending" OWNER TO postgres;
+
 
 --
 -- Name: Supervisor; Type: TABLE; Schema: public; Owner: postgres
@@ -335,8 +323,6 @@ ALTER TABLE ONLY public."Detachment"
 -- Name: HouseSupervisor HouseSupervisor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."HouseSupervisor"
-    ADD CONSTRAINT "HouseSupervisor_pkey" PRIMARY KEY (id);
 
 
 --
@@ -359,8 +345,7 @@ ALTER TABLE ONLY public."Room"
 -- Name: Spending Spending_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Spending"
-    ADD CONSTRAINT "Spending_pkey" PRIMARY KEY (id);
+
 
 
 --
@@ -423,16 +408,12 @@ ALTER TABLE ONLY public."Detachment"
 -- Name: HouseSupervisor HouseSupervisor_houseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."HouseSupervisor"
-    ADD CONSTRAINT "HouseSupervisor_houseId_fkey" FOREIGN KEY ("houseId") REFERENCES public."House"(id);
 
 
 --
 -- Name: HouseSupervisor HouseSupervisor_supervisorId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."HouseSupervisor"
-    ADD CONSTRAINT "HouseSupervisor_supervisorId_fkey" FOREIGN KEY ("supervisorId") REFERENCES public."Supervisor"(id);
 
 
 --
@@ -447,8 +428,6 @@ ALTER TABLE ONLY public."Room"
 -- Name: Spending Spending_arrivalId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."Spending"
-    ADD CONSTRAINT "Spending_arrivalId_fkey" FOREIGN KEY ("arrivalId") REFERENCES public."Arrival"(id);
 
 
 --
