@@ -1,0 +1,47 @@
+.container-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрує вміст по вертикалі */
+    align-items: center; /* Центрує вміст по горизонталі */
+    height: 100%;
+    width: 500px;
+}
+
+.login-inputField {
+    margin-bottom: 15px;
+    width: calc(100% - 32px); /* Забирає відступи */
+    border-radius: 25px; /* Заокруглює кути інпутів */
+    height: 50px;
+}
+
+.login-inputLabel {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #2C2E30;
+    width: 100%;
+    text-align: left; /* Вирівнює лейбли по лівому краю */
+}
+
+.loginButton {
+    width: calc(100% - 32px); /* Забирає відступи */
+    border-radius: 12px; /* Заокруглює кути кнопки */
+    background-color: #445082;
+    margin-top: 40px;
+    height: 40px;
+}
+
+.login-header{
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #445082;
+}
+
+.login-subheader{
+    font-size: 16px;
+    text-align: center;
+    color: #45484C;
+}
