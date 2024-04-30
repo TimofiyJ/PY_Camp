@@ -35,3 +35,7 @@ id,number,balcony,floor,houseId,bedAmount
 34,2,False,1,9,4
 35,3,True,2,9,4
 36,4,True,2,9,4
+37,1,False,1,10,4
+38,2,False,1,10,4
+39,3,True,2,10,4
+40,4,True,2,10,4

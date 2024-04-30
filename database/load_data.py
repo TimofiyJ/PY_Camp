@@ -2,6 +2,7 @@ import random
 import pandas as pd
 from datetime import datetime, timedelta
 
+
 def generate_random_kid_date():
     start_date = datetime(2007, 1, 1)
     end_date = datetime(2016, 12, 31)
@@ -17,6 +18,7 @@ def generate_random_kid_date():
     
     return random_date
 
+
 def generate_random_phone_number():
     # Generate 9 random digits for the phone number
     random_digits = ''.join([str(random.randint(0, 9)) for _ in range(9)])
@@ -26,8 +28,22 @@ def generate_random_phone_number():
     
     return phone_number
 
+
+def generate_random_supervisor_date():
+    start_date = datetime(2000, 1, 1)
+    end_date = datetime(2002, 12, 31)
+    
+    # Generate a random number of seconds within the range
+    random_seconds = random.randint(0, int((end_date - start_date).total_seconds()))
+    
+    # Add the random number of seconds to the start_date
+    random_date = start_date + timedelta(seconds=random_seconds)
+    
+    return random_date
+
+
 # GENERATE HOUSE
-house_id = [i for i in range(1, 10)]
+house_id = [i for i in range(1, 11)]
 house_name = [
     "Marichka",
     "Fialka",
@@ -38,6 +54,7 @@ house_name = [
     "Sontse",
     "Spryna",
     "Dobro",
+    "Zapas"
 ]
 data = {"id":house_id,"name":house_name}
 houses = pd.DataFrame(data=data,columns=["id", "name"])
@@ -51,7 +68,7 @@ room_balcony = []
 room_floor = []
 room_bedAmount = []
 room_rid = 0
-for i in house_id:
+for i in range(1,len(house_id)+1):
     for n in range(1,5):
         room_rid +=1
         room_id.append(room_rid)
@@ -123,9 +140,12 @@ ukrainian_female_names = ["Halyna", "Daryna", "Zhanna", "Kateryna", "Veronika", 
 ukrainian_surnames = ["Antonenko", "Bilenko", "Vasylchenko", "Hrytsenko", "Danylenko", "Yevdokymenko", "Kovalko", "Balanenko", "Ivanchenko", "Kovalenko", "Lysenko", "Melko", "Nesterenko", "Oleksiyenko", "Pavlenko", "Romanchuko", "Sydorenko", "Tkachenko", "Usenko", "Fedorenko"]
 ukrainian_cities = ["Sambir", "Lviv", "Odesa", "Kyiv", "Rivne", "Strii", "Pynyani", "Frankivsk"]
 
+contact_cid = 0
+
 for a in arrival_id:
     for i in range(1,145):
-        contact_id.append(i)
+        contact_cid +=1
+        contact_id.append(contact_cid)
         if i%2 == 0:
             contact_name.append(random.choice(ukrainian_male_names))
             contact_surname.append(random.choice(ukrainian_surnames))
@@ -137,6 +157,31 @@ for a in arrival_id:
         contact_adress.append(random.choice(ukrainian_cities))
         contact_birthDate.append(generate_random_kid_date())
         contact_phoneNumber.append(generate_random_phone_number())
-    
+
+# ADD SUPERVISORS
+for j in range(145, 166):
+    contact_cid +=1
+    contact_id.append(contact_cid)
+    if j%2 == 0:
+        contact_name.append(random.choice(ukrainian_male_names))
+        contact_surname.append(random.choice(ukrainian_surnames))
+        contact_sex.append('m')
+    else:
+        contact_name.append(random.choice(ukrainian_female_names))
+        contact_surname.append(random.choice(ukrainian_surnames))
+        contact_sex.append('f')
+    contact_adress.append(random.choice(ukrainian_cities))
+    contact_birthDate.append(generate_random_supervisor_date())
+    contact_phoneNumber.append(generate_random_phone_number())
+
+
+data = {"id":contact_id,"name":contact_name,"surname":contact_surname,"adress":contact_adress,"birthDate":contact_birthDate,"phoneNumber":contact_phoneNumber,"sex":contact_sex}
+contacts = pd.DataFrame(data=data,columns=["id", "name","surname","adress","birthDate","phoneNumber","sex"])
+contacts.to_csv("./data/Contact.csv", index=False)
+ 
+# ADD CLIENTS
+client_id = []
+client_alergy = []
+client_preferences = []
 
 
