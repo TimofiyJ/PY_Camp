@@ -27,7 +27,7 @@ export const ArrivalDropdown = () => {
                 inputProps={{id: 'arrival-select'}}
                 className="arrival-dropdown" // Додано клас для стилізації
             >
-                 <MenuItem value="" disabled>
+                <MenuItem value="" disabled>
                     Оберіть заїзд
                 </MenuItem>
                 {data.map((arrival, index) => (

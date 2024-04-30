@@ -1,13 +1,34 @@
-import React from 'react';
+import React,  { useState, useEffect }  from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import './Filter.css'; // Імпорт CSS файлу для стилізації
 
-export const RoomDropdown = () => {
+export const RoomDropdown = ({onRoomChange, selectedHouse}) => {
     const [room, setRoom] = React.useState('');
-
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        if(selectedHouse) { // Only fetch data if selectedHouse is available
+            fetch(`http://localhost:5000/rooms-filter`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ house: selectedHouse })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setData(data);
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching rooms:', error);
+                });
+        }
+    }, [selectedHouse]);
     const handleChange = (event) => {
         setRoom(event.target.value);
+        onRoomChange(event.target.value);
+
     };
 
     return (
@@ -24,13 +45,11 @@ export const RoomDropdown = () => {
                 <MenuItem value="" disabled>
                     Оберіть кімнату
                 </MenuItem>
-                <MenuItem value="room1">1</MenuItem>
-                <MenuItem value="room2">2</MenuItem>
-                <MenuItem value="room3">3</MenuItem>
-                <MenuItem value="room4">4</MenuItem>
-                <MenuItem value="room5">5</MenuItem>
-                <MenuItem value="room6">6</MenuItem>
-                <MenuItem value="room7">7</MenuItem>
+                {data.map((room, index) => (
+                    <MenuItem key={index} value={room.number}>
+                        {`${room.number}`}
+                    </MenuItem>
+                ))}
             </Select>
         </div>
     );
