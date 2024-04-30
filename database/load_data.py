@@ -214,7 +214,7 @@ supervisor_id = []
 supervisor_contactId = []
 supervisor_detachmentId = []        
 supervisor_cid = 0
-for i in range(supervisor_contact_cid, supervisor_contact_cid+21):
+for i in range(supervisor_contact_cid, supervisor_contact_cid+20):
     for j in range(1,arrival_id[-1]+1):
         supervisor_cid += 1
         supervisor_id.append(supervisor_cid)

@@ -19,10 +19,14 @@ SET row_security = off;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
-
 --
 -- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
 --
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
+--
+
 
 
 --
@@ -222,8 +226,6 @@ ALTER TABLE public."House" OWNER TO postgres;
 --
 
 
-
-
 --
 -- Name: Room; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -243,7 +245,6 @@ ALTER TABLE public."Room" OWNER TO postgres;
 --
 -- Name: Spending; Type: TABLE; Schema: public; Owner: postgres
 --
-
 
 
 
@@ -268,15 +269,53 @@ ALTER TABLE public."Supervisor" OWNER TO postgres;
 
 CREATE TABLE public."Users" (
     login text,
-    password text
+    password text,
+    id integer NOT NULL
 );
 
 
 ALTER TABLE public."Users" OWNER TO postgres;
 
 --
+-- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."Users_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Users_id_seq" OWNER TO postgres;
+
+--
+-- Name: Users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."Users_id_seq" OWNED BY public."Users".id;
+
+
+--
+-- Name: Users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Users_id_seq"'::regclass);
+
+
+--
 -- Data for Name: Arrival; Type: TABLE DATA; Schema: public; Owner: postgres
 --
+
+
+
+--
+-- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public."Users_id_seq"', 2, true);
 
 
 --
@@ -346,14 +385,20 @@ ALTER TABLE ONLY public."Room"
 --
 
 
-
-
 --
 -- Name: Supervisor Supervisor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."Supervisor"
     ADD CONSTRAINT "Supervisor_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Users Users_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_pk" PRIMARY KEY (id);
 
 
 --
@@ -427,7 +472,6 @@ ALTER TABLE ONLY public."Room"
 --
 -- Name: Spending Spending_arrivalId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
-
 
 
 --

@@ -97,7 +97,29 @@ def rooms():
     print(rooms)
     return rooms
 
-@app.route("/rooms-filter", methods=["POST"])
+@app.route("/rooms/<room_id>", methods=["POST"])
+def rooms_kids(room_id):
+
+    connection, cursor = db_connect()
+
+    data = request.get_json()
+    arrival_id=data["arrival_id"]
+
+    cursor.execute(f"""SELECT C.name, C.surname, C.sex, C."birthDate",B.number
+                    FROM "Client"
+                    JOIN public."Contact" C on C.id = public."Client"."contactId"
+                    JOIN public."Detachment" D on D.id = "Client"."detachmentId"
+                    JOIN public."Arrival" A on A.id = D."arrivalId"
+                    JOIN public."Bed" B on B.id = "Client"."bedId"
+                    JOIN public."Room" R on R.id = B."roomId"
+                    JOIN public."House" H on H.id = R."houseId"
+                    WHERE A.id={arrival_id} AND R.id={room_id}
+                    """)
+    
+    rooms = cursor.fetchall()
+    return rooms
+
+@app.route("/rooms_filter", methods=["POST"])
 def rooms_filter():
     print("At rooms")
     connection, cursor = db_connect()
@@ -118,7 +140,7 @@ def rooms_filter():
     db_close(connection, cursor)
     return response
 
-@app.route("/houses-filter")
+@app.route("/houses_filter")
 def houses_filer():
     connection, cursor = db_connect()
     cursor.execute('SELECT * FROM "House";')
@@ -133,7 +155,7 @@ def houses_filer():
     return response
 
 
-@app.route("/address-filter")
+@app.route("/address_filter")
 def address_filter():
     print("At rooms")
     connection, cursor = db_connect()
@@ -395,6 +417,7 @@ def allchildren(id):
     address_filter = data["address_filter"] if "address_filter" in data.keys() and data["address_filter"]!='' else None
     house_filter = data["house_filter"] if "house_filter" in data.keys() and data["house_filter"]!='' else None
     room_filter = data["room_filter"] if "room_filter" in data.keys() and data["room_filter"]!='' else None
+    surname_filter = data["surname_filter"] if "surname_filter" in data.keys() and data["surname_filter"]!='' else None
     print(data)
     query = """ 
     SELECT "Client".id as id, C.name as name, C.surname as surname,"birthDate" as birthdate, sex,
@@ -416,10 +439,11 @@ def allchildren(id):
         query += " AND (sex = %s)"
         filter_values.append(gender_filter)
     if age_filter is not None:
-        query += " AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) <= %s)"
+        query += " AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) >= %s) AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) <= %s)"
         filter_values.append(age_filter)
+        filter_values.append(str(int(age_filter)+3))
     if address_filter is not None:
-        query += " AND (C.address ILIKE %s)"
+        query += " AND (C.adress ILIKE %s)"
         filter_values.append('%' + address_filter + '%')
     if house_filter is not None:
         query += " AND (H.name ILIKE %s)"
@@ -427,6 +451,9 @@ def allchildren(id):
     if room_filter is not None:
         query += " AND (R.number = %s)"
         filter_values.append(room_filter)
+    if surname_filter is not None:
+        query += " AND (C.surname ILIKE %s)"
+        filter_values.append('%' + surname_filter + '%')
 
     # Execute the query with filter values
     cursor.execute(query, filter_values)
@@ -450,6 +477,84 @@ def allchildren(id):
         response.append(r)
     db_close(connection, cursor)
     return response
+
+
+@app.route("/allsupervisers/<id>", methods=["POST"]) # TODO: do it
+def allsupervisers(id):
+    connection, cursor = db_connect()
+    data = request.get_json()
+    print(data)
+    gender_filter = data["gender_filter"] if "gender_filter" in data.keys() and data["gender_filter"]!='' else None
+    age_filter = data["age_filter"] if "age_filter" in data.keys() and data["age_filter"]!='' else None
+    address_filter = data["address_filter"] if "address_filter" in data.keys() and data["address_filter"]!='' else None
+    surname_filter = data["surname_filter"] if "surname_filter" in data.keys() and data["surname_filter"]!='' else None    
+    print(data)
+    query = """ 
+    SELECT "Supervisor".id as id, C.name as name, C.surname as surname,"birthDate" as birthdate, sex,
+           C."phoneNumber", C.adress
+    FROM "Supervisor"
+    JOIN public."Contact" C ON C.id = "Supervisor"."contactId"
+    JOIN public."Detachment" D ON D.id = "detachmentId"
+    JOIN public."Arrival" A ON A.id = D."arrivalId"
+    WHERE A.id = %s
+    """
+
+    # Add optional filters if they are not NULL
+    filter_values = [id]
+    if gender_filter is not None:
+        query += " AND (sex = %s)"
+        filter_values.append(gender_filter)
+    if age_filter is not None:
+        query += " AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) >= %s) AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) <= %s)"
+        filter_values.append(age_filter)
+        filter_values.append(str(int(age_filter)+3))
+    if address_filter is not None:
+        query += " AND (C.adress ILIKE %s)"
+        filter_values.append('%' + address_filter + '%')
+    if surname_filter is not None:
+        query += " AND (C.surname ILIKE %s)"
+        filter_values.append('%' + surname_filter + '%')
+
+    # Execute the query with filter values
+    cursor.execute(query, filter_values)
+    supervisors = cursor.fetchall()
+    print(supervisors)
+    response = []
+    for supervisor in supervisors:
+        r = {}
+        r["id"] = supervisor[0]
+        r["name"] = supervisor[1]
+        r["surname"] = supervisor[2]
+        r["birthday"] = (supervisor[3]).strftime("%Y %B %d")
+        r["gender"] = supervisor[4]
+        r["phone_number"] = supervisor[5]
+        r["address"] = supervisor[6]
+        response.append(r)
+    db_close(connection, cursor)
+    return response
+
+@app.route("/free_bed/<arrival>")
+def free_bed(arrival):
+    connection, cursor = db_connect()
+    cursor.execute(
+        """
+            SELECT "Bed".id, R.number, H.name
+            FROM "Bed"
+            JOIN public."Room" R on R.id = "Bed"."roomId"
+            JOIN public."House" H on H.id = R."houseId"
+            WHERE "Bed".id NOT IN (
+                SELECT "bedId"
+                FROM "Client"
+                JOIN public."Detachment" D ON D.id = "Client"."detachmentId"
+                JOIN public."Arrival" A ON A.id = D."arrivalId"
+                WHERE A.id = %s
+            );
+        """,
+        (arrival),
+    )
+    free_beds = cursor.fetchall()
+    return jsonify(free_beds)
+
 
 
 if __name__ == "__main__":
