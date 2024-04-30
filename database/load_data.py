@@ -183,5 +183,31 @@ contacts.to_csv("./data/Contact.csv", index=False)
 client_id = []
 client_alergy = []
 client_preferences = []
+client_bedId = []
+client_contactId = []
+client_detachmentId = []
+
+client_cid = 1
+alergies = ["fur", "orange", "apple"]
+preferences = ["more football", "tasty food", "more sleep", "computer games"]
+
+for a in arrival_id:
+    for i in range(1,145):
+        client_cid +=1
+        client_id.append(client_cid)
+        if random.randint(1, 100) > 95:
+            client_alergy.append(random.choice(alergies))
+        else:
+            client_alergy.append(" ")
+        client_preferences.append(0)
+        client_bedId.append(i)
+        client_contactId.append(client_cid)
+        client_detachmentId.append(a)
+
+data = {"id":client_id,"alergy":client_alergy,"preferences":client_preferences,"bedId":client_bedId,"contactId":client_contactId,"detachmentId":client_detachmentId}
+clients = pd.DataFrame(data=data,columns=["id", "alergy","preferences","bedId","contactId","detachmentId"])
+clients.to_csv("./data/Client.csv", index=False)
+
+        
 
 
