@@ -1,8 +1,9 @@
 class Child:
-    def __init__(self, name, age, gender):
+    def __init__(self, name, age, gender, id):
         self.name = name
         self.age = age
         self.gender = gender
+        self.id = id
 
 
 class House:

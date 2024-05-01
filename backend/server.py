@@ -176,11 +176,9 @@ def address_filter():
 def get_arrivals():
     print("At arrivals")
     connection, cursor = db_connect()
-    year = request.args.get("year")
-    year = 2024  # temporary
-    cursor.execute(f'SELECT "beginningDate","endDate"\
+    cursor.execute('SELECT "beginningDate","endDate"\
                     FROM "Arrival"\
-                    WHERE EXTRACT(YEAR FROM "beginningDate") = {year}')
+                    ')
     arrivals = cursor.fetchall()
     print(arrivals)
     response = []
@@ -192,9 +190,30 @@ def get_arrivals():
     db_close(connection, cursor)
     return response
 
+@app.route("/arrival_by_date", methods=["POST"])
+def get_arrivals_by_date():
+    connection, cursor = db_connect()
+    date =  request.json.get("beginningDate")
+    date_obj = datetime.strptime(date, '%d/%m/%Y')
+
+    # Extract day, month, and year
+    day = date_obj.day
+    month = date_obj.month
+    year = date_obj.year
+
+    cursor.execute(f"""SELECT id
+                        FROM "Arrival"
+                        WHERE EXTRACT(MONTH FROM "Arrival"."beginningDate") = {month}
+                            AND EXTRACT(YEAR FROM "Arrival"."beginningDate") = {year}
+                            AND EXTRACT(DAY FROM "Arrival"."beginningDate") = {day};
+                        """)
+    arrivals = cursor.fetchone()
+    print(arrivals)
+    return jsonify(arrivals)
 
 @app.route("/relocate")
 def relocate_algorithm():
+    print("AT RELOCATE")
     arrival = 1
     connection, cursor = db_connect()
     cursor.execute('SELECT name FROM "House";')
@@ -205,7 +224,6 @@ def relocate_algorithm():
         houses.append(House(cursor.fetchone()[0], house[0]))
     cursor.execute(f"SELECT getarrivalchildren({arrival})")
     children_db = cursor.fetchall()
-
     children = [
         Child(
             str(c[0].replace("(", "").replace(")", "").split(",")[0])
@@ -213,6 +231,7 @@ def relocate_algorithm():
             + str(c[0].replace("(", "").replace(")", "").split(",")[1]),
             calculate_age(c[0].replace("(", "").replace(")", "").split(",")[2]),
             c[0].replace("(", "").replace(")", "").split(",")[3],
+            c[0].replace("(", "").replace(")", "").split(",")[4]
         )
         for c in children_db
     ]
@@ -267,6 +286,8 @@ def relocate_algorithm():
 
     # Set to keep track of used houses
     used_houses = set()
+    unassigned_children = []
+
 
     # Iterate over the sorted age groups and find houses with corresponding capacities
     print("boys:")
@@ -276,6 +297,7 @@ def relocate_algorithm():
             print(
                 f"Houses with total capacity {age_groups_b[age]}: {[house.name for house in result]}"
             )
+            c_id=0
             for house in result:
                 cursor.execute(f"""SELECT \"Bed\".id
                                  FROM \"Bed\"
@@ -294,17 +316,29 @@ def relocate_algorithm():
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
                                 """)
                 child_id = cursor.fetchall()
-                for i in range(len(child_id)):
+
+                for j in range(len(bed_ids)):
+                    if c_id==len(child_id):
+                        break
                     cursor.execute(f"""UPDATE "Client"
-                                        SET "bedId"={bed_ids[i][0]}
-                                        WHERE id={child_id[i][0]};
+                                        SET "bedId"={bed_ids[j][0]}
+                                        WHERE id={child_id[c_id][0]};
                                   """)
+
+                    c_id = c_id+1
+                if c_id==len(child_id):
+                    break
                 connection.commit()
+            
+            unassigned_children.extend(children[c_id:])
+
 
         else:
             print(
                 f"No combination of houses found with total capacity {age_groups_b[age]}."
             )
+            unassigned_children.extend(children[c_id:])
+
     print("girls:")
     for age in age_groups_g:
         result = find_houses_with_capacity(houses, age_groups_g[age], used_houses)
@@ -312,6 +346,7 @@ def relocate_algorithm():
             print(
                 f"Houses with total capacity {age_groups_g[age]}: {[house.name for house in result]}"
             )
+            c_id=0
             for house in result:
                 cursor.execute(f"""SELECT \"Bed\".id
                                  FROM \"Bed\"
@@ -330,17 +365,51 @@ def relocate_algorithm():
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
                                 """)
                 child_id = cursor.fetchall()
-                for i in range(len(child_id)):
+                for j in range(len(bed_ids)):
+                    if c_id==len(child_id):
+                        break
                     cursor.execute(f"""UPDATE "Client"
-                                        SET "bedId"={bed_ids[i][0]}
-                                        WHERE id={child_id[i][0]};
+                                        SET "bedId"={bed_ids[j][0]}
+                                        WHERE id={child_id[c_id][0]};
                                   """)
+                if c_id==len(child_id):
+                    break
                 connection.commit()
+            
+            unassigned_children.extend(children[c_id:])
 
         else:
             print(
                 f"No combination of houses found with total capacity {age_groups_g[age]}."
             )
+            unassigned_children.extend(children[c_id:])
+
+    if unassigned_children:
+        # Get all free beds
+        cursor.execute(
+        """
+        SELECT "Bed".id, R.number, H.name
+        FROM "Bed"
+        JOIN public."Room" R on R.id = "Bed"."roomId"
+        JOIN public."House" H on H.id = R."houseId"
+        WHERE "Bed".id NOT IN (
+            SELECT "bedId"
+            FROM "Client"
+            JOIN public."Detachment" D ON D.id = "Client"."detachmentId"
+            JOIN public."Arrival" A ON A.id = D."arrivalId"
+            WHERE A.id = %s
+        );
+        """,
+        (arrival,)
+        )
+
+        free_beds = cursor.fetchall()
+        # Iterate over unassigned children and free beds
+        for child, bed in zip(unassigned_children, free_beds):
+            print("child " + str(child.id) + " was relocated to " + str(bed[0]))
+            cursor.execute(f"""UPDATE "Client" SET "bedId"={bed[0]} WHERE id={child.id}""")
+            connection.commit()
+
     cursor.execute('SELECT id, "bedId" FROM "Client";')
     clients = cursor.fetchall()
     response = []
