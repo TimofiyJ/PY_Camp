@@ -15,10 +15,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 --
 -- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
 --
@@ -33,12 +29,12 @@ SET default_table_access_method = heap;
 -- Name: getarrivalchildren(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.getarrivalchildren(arrivalid integer) RETURNS TABLE(name text, surname text, birthdate date, sex character)
+CREATE FUNCTION public.getarrivalchildren(arrivalid integer) RETURNS TABLE(name text, surname text, birthdate date, sex character, id integer)
     LANGUAGE plpgsql
     AS $$
 BEGIN
     RETURN QUERY
-    SELECT "Contact".name, "Contact".surname, "Contact"."birthDate", "Contact".sex
+    SELECT "Contact".name, "Contact".surname, "Contact"."birthDate", "Contact".sex, "Client".id
     FROM "Contact"
 
     INNER JOIN "Client" ON "Contact".id="Client"."contactId"

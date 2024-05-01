@@ -244,6 +244,11 @@ def relocate_algorithm(arrival):
         houses.append(House(cursor.fetchone()[0], house[0]))
     cursor.execute(f"SELECT getarrivalchildren({arrival})")
     children_db = cursor.fetchall()
+    print(str(children_db[0][0].replace("(", "").replace(")", "").split(",")[0]))
+    print(str(children_db[0][0].replace("(", "").replace(")", "").split(",")[1]))
+    print(calculate_age(children_db[0][0].replace("(", "").replace(")", "").split(",")[2]))
+    print(children_db[0][0].replace("(", "").replace(")", "").split(",")[3])
+    print(children_db[0][0].replace("(", "").replace(")", "").split(",")[4])
     children = [
         Child(
             str(c[0].replace("(", "").replace(")", "").split(",")[0])
@@ -255,30 +260,40 @@ def relocate_algorithm(arrival):
         )
         for c in children_db
     ]
-    print([str(c.name) + " " + str(c.age) + " " + str(c.gender) for c in children])
+    for i in range(len(children_db)):
+        print(children[i] )
+
+
     houses.sort(key=lambda x: x.capacity)
     boys = [c for c in children if c.gender == "m"]
     girls = [c for c in children if c.gender == "f"]
     age_b = [c.age for c in boys]
+    print("boys")
+    for i in range(len(boys)):
+        print(boys[i] )
+    print("girls")
+    for i in range(len(girls)):
+        print(girls[i] )
 
     set_numbers = list(set(age_b))
     selected_numbers = [set_numbers[0]]
-    i = 0
-    while i != len(set_numbers):
+    i = 0 
+    while i!=len(set_numbers):
         k = selected_numbers[-1]
-        if abs(k - set_numbers[i]) > 3:
+        if abs(k-set_numbers[i])>3:
             selected_numbers.append(set_numbers[i])
-        i = i + 1
+        i=i+1
 
     age_groups_b = {}
 
     for age in selected_numbers:
-        age_groups_b[age] = 0
+        age_groups_b[age]=0
         for a in age_b:
-            if (a - age) <= 3 and (a - age) >= 0:
+            if (a-age)<=3 and (a-age)>=0:
                 age_groups_b[age] += 1
     print("boys:")
     print(age_groups_b)
+
 
     age_g = [c.age for c in girls]
 
@@ -301,23 +316,30 @@ def relocate_algorithm(arrival):
     print("girls:")
     print(age_groups_g)
 
-    age_groups_b = dict(sorted(age_groups_b.items(), key=lambda item: item[0]))
-    age_groups_g = dict(sorted(age_groups_g.items(), key=lambda item: item[0]))
-
+    age_groups_b = dict(sorted(age_groups_b.items(), key=lambda item: item[1], reverse=True))
+    age_groups_g = dict(sorted(age_groups_g.items(), key=lambda item: item[1], reverse=True))
+    print("AGES:")
+    print(age_groups_b)
+    print(age_groups_g)
+    
+    print("houses:")
+    print(houses)
     # Set to keep track of used houses
     used_houses = set()
     unassigned_children = []
-
-
-    # Iterate over the sorted age groups and find houses with corresponding capacities
     print("boys:")
     for age in age_groups_b:
         result = find_houses_with_capacity(houses, age_groups_b[age], used_houses)
+        if not result:
+            unused_houses = [house for house in houses if house not in used_houses]
+            if len(unused_houses)>0:
+                result = unused_houses
         if result:
             print(
                 f"Houses with total capacity {age_groups_b[age]}: {[house.name for house in result]}"
             )
-            c_id=1
+            c_id=0
+            print("AGE: ",age)
             cursor.execute(f"""SELECT "Client".id, "Contact".sex   
                                     FROM "Client"
                                     INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
@@ -332,50 +354,37 @@ def relocate_algorithm(arrival):
             print(child_id)
 
             for house in result:
+                print("AAA " + house.name)
                 cursor.execute(f"""SELECT \"Bed\".id
-                                 FROM \"Bed\"
-                                 JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
-                                 JOIN public.\"House\" H on H.id = R.\"houseId\"
-                                 WHERE H.name = '{house.name}'""")
+                                    FROM \"Bed\"
+                                    JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
+                                    JOIN public.\"House\" H on H.id = R.\"houseId\"
+                                    WHERE H.name = '{house.name}'""")
                 bed_ids = cursor.fetchall()
+                print("beds")
+                print(len(bed_ids))
+                print(bed_ids)
                 for j in range(len(bed_ids)):
+                    print(c_id)
                     if c_id==len(child_id):
                         break
+                    print(bed_ids[j][0])
+                    print(child_id[c_id][0])
                     cursor.execute(f"""UPDATE "Client"
                                         SET "bedId"={bed_ids[j][0]}
                                         WHERE id={child_id[c_id][0]};
-                                  """)
-                    connection.commit()
-                    print(f"ID: {child_id[c_id][0]} MOVED TO {house.name}")
+                                    """)
+                    print("WTF")
+                    print(f"ID: {child_id[c_id][0]} MOVED TO {house.name} BED {bed_ids[j][0]}")
                     c_id = c_id+1
                 if c_id==len(child_id):
                     break
             
-            unassigned_children.extend(children[c_id:])
+            unassigned_children.extend(child_id[c_id:])
 
-
+            print("UNASSIGNED MAN", len(unassigned_children))
         else:
-            print(
-                f"No combination of houses found with total capacity {age_groups_b[age]}."
-            )
-            unassigned_children.extend(children[c_id:])
-
-    print("girls:")
-    for age in age_groups_g:
-        result = find_houses_with_capacity(houses, age_groups_g[age], used_houses)
-        if result:
-            print(
-                f"Houses with total capacity {age_groups_g[age]}: {[house.name for house in result]}"
-            )
-            c_id=1
-            for house in result:
-                cursor.execute(f"""SELECT \"Bed\".id
-                                 FROM \"Bed\"
-                                 JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
-                                 JOIN public.\"House\" H on H.id = R.\"houseId\"
-                                 WHERE H.name = '{house.name}'""")
-                bed_ids = cursor.fetchall()
-                cursor.execute(f"""SELECT "Client".id  
+            cursor.execute(f"""SELECT "Client".id , "Contact".sex  
                                     FROM "Client"
                                     INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
                                     INNER JOIN "Detachment" ON "Client"."detachmentId" = "Detachment".id
@@ -385,28 +394,74 @@ def relocate_algorithm(arrival):
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} <= 3
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
                                 """)
-                child_id = cursor.fetchall()
+            child_id = cursor.fetchall()
+            unassigned_children.extend(child_id)
+            print("No houses")
+
+    print("girls:")
+    for age in age_groups_g:
+        result = find_houses_with_capacity(houses, age_groups_g[age], used_houses)
+        if not result:
+            unused_houses = [house for house in houses if house not in used_houses]
+            if len(unused_houses)>0:
+                result = unused_houses
+        if result:
+            print(
+                f"Houses with total capacity {age_groups_g[age]}: {[house.name for house in result]}"
+            )
+            c_id=0
+            print(age)
+            print(arrival)
+            cursor.execute(f"""SELECT "Client".id , "Contact".sex  
+                                    FROM "Client"
+                                    INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
+                                    INNER JOIN "Detachment" ON "Client"."detachmentId" = "Detachment".id
+                                    INNER JOIN "Arrival" ON "Detachment"."arrivalId" = "Arrival".id
+                                    WHERE "Contact".sex = 'f'
+                                    AND "Arrival".id = {arrival}
+                                    AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} <= 3
+                                    AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
+                                """)
+            child_id = cursor.fetchall()
+            print("GIRLS:")
+            print(child_id)
+            for house in result:
+                cursor.execute(f"""SELECT \"Bed\".id
+                                    FROM \"Bed\"
+                                    JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
+                                    JOIN public.\"House\" H on H.id = R.\"houseId\"
+                                    WHERE H.name = '{house.name}'""")
+                bed_ids = cursor.fetchall()
                 for j in range(len(bed_ids)):
                     if c_id==len(child_id):
                         break
                     cursor.execute(f"""UPDATE "Client"
                                         SET "bedId"={bed_ids[j][0]}
                                         WHERE id={child_id[c_id][0]};
-                                  """)
+                                    """)
+                    
+
                     print(f"ID: {child_id[c_id][0]} MOVED TO {house.name}")
-                    connection.commit()
                     c_id +=1
                 if c_id==len(child_id):
                     break
             
-            unassigned_children.extend(children[c_id:])
-
+            unassigned_children.extend(child_id[c_id:])
+            print("UNASSIGNED WITH GIRLS AND MAN", len(unassigned_children))
         else:
-            print(
-                f"No combination of houses found with total capacity {age_groups_g[age]}."
-            )
-            unassigned_children.extend(children[c_id:])
-    connection.commit()
+            cursor.execute(f"""SELECT "Client".id , "Contact".sex  
+                                    FROM "Client"
+                                    INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
+                                    INNER JOIN "Detachment" ON "Client"."detachmentId" = "Detachment".id
+                                    INNER JOIN "Arrival" ON "Detachment"."arrivalId" = "Arrival".id
+                                    WHERE "Contact".sex = 'f'
+                                    AND "Arrival".id = {arrival}
+                                    AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} <= 3
+                                    AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
+                                """)
+            child_id = cursor.fetchall()
+            unassigned_children.extend(child_id)
+            print("No houses")
 
     if unassigned_children:
         # Get all free beds
@@ -430,9 +485,9 @@ def relocate_algorithm(arrival):
         free_beds = cursor.fetchall()
         # Iterate over unassigned children and free beds
         for child, bed in zip(unassigned_children, free_beds):
-            print("child " + str(child.id) + " was relocated to " + str(bed[0]))
-            cursor.execute(f"""UPDATE "Client" SET "bedId"={bed[0]} WHERE id={child.id}""")
-            connection.commit()
+            print(child)
+            print(bed)
+            cursor.execute(f"""UPDATE "Client" SET "bedId"={bed[0]} WHERE id={child[0]}""")
 
     cursor.execute('SELECT id, "bedId" FROM "Client";')
     clients = cursor.fetchall()
