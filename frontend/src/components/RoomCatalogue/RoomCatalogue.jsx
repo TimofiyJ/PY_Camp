@@ -1,37 +1,34 @@
-import {RoomBlock} from "../RoomBlock/RoomBlock";
-import './RoomCatalogue.css';
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { RoomBlock } from "../RoomBlock/RoomBlock";
+import "./RoomCatalogue.css";
 
 export const RoomCatalogue = () => {
-    const [roomdata, setData] = useState([]);
-    const { arrival, house_id } = useParams();
+  const [roomdata, setData] = useState([]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const arrival = searchParams.get("arrival");
+  const house_id = searchParams.get("house_id");
 
-    console.log(arrival)
-    console.log(house_id)
+  useEffect(() => {
+    fetch(`http://localhost:5000/rooms?house=${house_id}&arrival=${arrival}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      .catch((error) =>
+        console.error("Error fetching room data:", error)
+      );
+  }, [house_id, arrival]);
 
-    console.log("hello from rooms")
-    useEffect(() => {
-        fetch(`http://localhost:5000/rooms?house=${house_id}&arrival=${arrival}`)
-        .then((res) => res.json())
-        .then((data) => {
-            setData(data);
-            console.log(data);
-        })
-        .catch((error) => console.error('Error fetching room data:', error));
-}, [house_id, arrival]);// Re-run effect when houseId changes
-
-    return (
-        <div>
-            <div className="rooms-grid">
-                {roomdata.map((room, idx) => (
-                    <RoomBlock
-                        key={idx}
-                        data={room}
-                        arrival={arrival}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div>
+      <div className="rooms-grid">
+        {roomdata.map((room, idx) => (
+          <RoomBlock key={idx} data={room} arrival={arrival} />
+        ))}
+      </div>
+    </div>
+  );
+};

@@ -29,7 +29,7 @@ export const HouseBlock = ({ data, arrival}) => {
           </div>
         </div>
         <hr className="hr-divider-house" />
-        <Link key={data.id} to={`/rooms/${arrival}/${data.id}`}>
+        <Link key={data.id} to={`/rooms?arrival=${arrival}&house_id=${data.id}`}>
           <button className="button-frame-house">
             <div className="button-house">
               <span className="view-text-house">Переглянути</span>

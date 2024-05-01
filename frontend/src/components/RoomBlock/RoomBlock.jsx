@@ -3,6 +3,7 @@ import './RoomBlock.css';
 
     export const RoomBlock = ({data, arrival }) => {
         console.log(data);
+        console.log(arrival)
         return (
             <div className='main-container'>
                 <div className='image'/>

@@ -85,15 +85,15 @@ def houses():
     db_close(connection, cursor)
     return response
 
-@app.route("/rooms/<arrival>/<id>")
-def rooms(arrival,id):
+@app.route("/rooms")
+def rooms():
     print("At rooms")
     connection, cursor = db_connect()
     house_id = request.args.get("house")
     cursor.execute(f'SELECT "Room".* \
                    FROM "Room"\
                    INNER JOIN "House" ON "Room"."houseId"="House".id\
-                   WHERE "House".id = {id};')
+                   WHERE "House".id = {house_id};')
     rooms = cursor.fetchall()
     print(rooms)
     return rooms
