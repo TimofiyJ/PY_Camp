@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import logo from 'C:/Users/Veronika/Desktop/course/PY_Camp/frontend/src/assets/image/logo.jpg'
-
 
 export const Login = () => {
     const [username, setUsername] = useState('');
@@ -41,7 +39,6 @@ export const Login = () => {
             height: '100%',
             width: '500px'
         }}>
-            <img src={logo} alt="logo" style={{marginBottom: '0px', width: '60px', height: '60px'}}/>
             <Typography variant="h4" sx={{color: '#445082', fontWeight: 'bold', marginBottom: '0px'}}>
                 Вітаємо у Sprynya Camp
             </Typography>

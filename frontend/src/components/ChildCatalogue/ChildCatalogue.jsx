@@ -115,13 +115,6 @@ export const ChildCatalogue = ({ selectedGender, selectedAddress, selectedAge, s
                 console.log(data);
             });
     }, [selectedGender, selectedAddress, selectedAge, selectedHouse, selectedRoom]);
-
-        .then((res) => res.json())
-        .then((data) => {
-            setData(data);
-            console.log(data);
-        });
-    }, [selectedGender, selectedAddress, selectedAge, selectedHouse, selectedRoom]);
     
     return (
         <div className="contaner-with-table">
