@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./ChildProfile.css";
-import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+// import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+// import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import {Box, FormControl, InputLabel} from "@mui/material";
@@ -126,13 +126,13 @@ export const ChildProfile = () => {
                                    onChange={e => setAddress(e.target.value)}/>
                         <div>
                             <span className='text-above-input'>Дата народження</span>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker label="" disabled={isDisabled}
                                             value={birthDate} onChange={setBirthDate}
                                             renderInput={(params) => <TextField {...params} size='small'
                                                                                 style={inputStyle}/>}
                                 />
-                            </LocalizationProvider>
+                            </LocalizationProvider> */}
                         </div>
 
                     </div>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import {useContext} from 'react';
+import {Link} from "react-router-dom";
+
 
 const columns = [
     {
@@ -21,6 +23,12 @@ const columns = [
         minWidth: 120
     },
     {
+        id: 'gender',
+        label: <b style={{ color: '#1D2E54'}}>Стать</b>,
+        minWidth: 100,
+        align: 'center',
+    },
+    {
         id: 'birthday',
         label: <b style={{ color: '#1D2E54'}}>Дата народження</b>,
         minWidth: 150,
@@ -29,16 +37,6 @@ const columns = [
         id: 'address',
         label: <b style={{ color: '#1D2E54'}}>Адреса</b>,
         minWidth: 100,
-    },
-    {
-        id: 'detachment',
-        label: <b style={{ color: '#1D2E54'}}>Загін</b>,
-        minWidth: 75,
-    },
-    {
-        id: 'houses',
-        label: <b style={{ color: '#1D2E54'}}>Будинки</b>,
-        minWidth: 175,
     },
     {
         id: 'action',
@@ -73,7 +71,28 @@ const rows = [
         'Трембіта, Маринка', 'Переглянути')
 ];
 
-export const SupervisorCatalogue = () => {
+export const SupervisorCatalogue = ({selectedGender, selectedAddress, selectedAge}) => {
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        const filters = {
+            gender_filter: selectedGender,
+            address_filter: selectedAddress,
+            age_filter: selectedAge,
+        };
+        fetch("http://localhost:5000/allsupervisers/1", {
+            method: 'POST', // or 'PUT', 'DELETE', etc. depending on your server endpoint
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filters)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, [selectedGender, selectedAddress, selectedAge]);
+    
     return (
         <div className="contaner-with-table">
             <Paper sx={{minWidth: 1134, overflow: 'hidden' }}>
@@ -93,7 +112,7 @@ export const SupervisorCatalogue = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
+                            {data
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
@@ -101,10 +120,12 @@ export const SupervisorCatalogue = () => {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
+                                                    {column.id === 'action' ? (
+                                                        <Link to={`/childProfile/${row.id}`}>Переглянути</Link> // Посилання для переходу на child/id
+                                                    ) : (
+                                                        value
+                                                    )}
+                                                </TableCell>
                                                 );
                                             })}
                                         </TableRow>

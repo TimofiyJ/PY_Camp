@@ -448,7 +448,7 @@ def allchildren(id):
         query += " AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) <= %s)"
         filter_values.append(age_filter)
     if address_filter is not None:
-        query += " AND (C.address ILIKE %s)"
+        query += " AND (C.adress ILIKE %s)"
         filter_values.append('%' + address_filter + '%')
     if house_filter is not None:
         query += " AND (H.name ILIKE %s)"

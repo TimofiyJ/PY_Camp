@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import { HouseBlock } from "../components/HouseBlock/HouseBlock";
 import { ChildCatalogue } from "../components/ChildCatalogue/ChildCatalogue";
@@ -16,6 +16,28 @@ import {DetachmentDropdown} from "../components/Filters/DetachmentFilter"; // Ш
 const theme = createTheme(); // Створено тему
 
 export const SupervisorPage = () => {
+    const [selectedGender, setSelectedGender] = useState(''); // State for selected gender
+    const [selectedAddress, setSelectedAddress] = useState('');
+    const [selectedAge, setSelectedAge] = useState('');
+    const [selectedHouse, setSelectedHouse] = useState('');
+    const [selectedRoom, setSelectedRoom] = useState('');
+
+    const handleGenderChange = (selectedGender) => {
+        setSelectedGender(selectedGender);
+    };
+    const handleAddressChange = (selectedAddress) => {
+        setSelectedAddress(selectedAddress);
+    };
+    const handleAgeChange = (selectedAge) => {
+        setSelectedAge(selectedAge);
+    };
+    const handleHouseChange = (selectedHouse) => {
+        setSelectedHouse(selectedHouse);
+    };
+    const handleRoomChange = (selectedRoom) => {
+        setSelectedRoom(selectedRoom);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <div className="page">
@@ -25,11 +47,14 @@ export const SupervisorPage = () => {
                 <div className="catalogueBlock">
                     <div className="filter-container"> {/* Додано відступ для кращого розділення */}
                         <SearchField />
-                        <AddressDropdown />
-                        <HouseDropdown />
-                        <DetachmentDropdown />
+                        <GenderDropdown onGenderChange={handleGenderChange} />
+                        <AgeDropdown onAgeChange={handleAgeChange} />
+                        <AddressDropdown onAddressChange={handleAddressChange}/>
                     </div>
-                    <SupervisorCatalogue />
+                    <SupervisorCatalogue
+                      selectedGender={selectedGender}
+                      selectedAddress={selectedAddress}
+                      selectedAge={selectedAge} />
                 </div>
             </div>
         </ThemeProvider>
