@@ -67,7 +67,9 @@ def houses():
     connection, cursor = db_connect()
     cursor.execute('SELECT * FROM "House";')
     houses = cursor.fetchall()
-    arrival = request.args.get("arrival")
+    print(request.args.get("arrival"))
+    arrival = int(request.args.get("arrival").replace("[","").replace("]",""))
+    print(arrival)
     response = []
     for house in houses:
         element = {}
@@ -190,10 +192,10 @@ def get_arrivals():
     db_close(connection, cursor)
     return response
 
-@app.route("/arrival_by_date", methods=["POST"])
+@app.route("/arrival_by_date", methods=["GET"])
 def get_arrivals_by_date():
     connection, cursor = db_connect()
-    date =  request.json.get("beginningDate")
+    date = request.args.get("arrival")
     date_obj = datetime.strptime(date, '%d/%m/%Y')
 
     # Extract day, month, and year

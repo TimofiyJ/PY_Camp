@@ -2,11 +2,13 @@ import { HouseBlock } from "../HouseBlock/HouseBlock";
 import "./HouseCatalog.css";
 import React, { useState, useEffect } from "react";
 import { ArrivalDropdown } from '../Filters/ArrivalFilter';
+import { useLocation } from "react-router-dom"; // Import useLocation hook
 
 
   
 export const HouseCatalogue = () => {
     const [responseData, setResponseData] = useState(null);
+    const location = useLocation(); // Initialize useLocation hook
 
     const handleClick = () => {
         fetch('http://localhost:5000/relocate')
@@ -22,13 +24,15 @@ export const HouseCatalogue = () => {
 
     const [data, setData] = useState([{}]);
     useEffect(() => {
-        fetch("http://localhost:5000/houses?arrival=1")
+        const params = new URLSearchParams(location.search);
+        const arrival = params.get('arrival');
+        fetch(`http://localhost:5000/houses?arrival=${arrival}`)
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
                 console.log(data);
             });
-    }, []);
+    }, [location.search]);
 
     return (
         <div className="houses-container">

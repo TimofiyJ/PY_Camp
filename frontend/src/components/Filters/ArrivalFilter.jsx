@@ -1,22 +1,33 @@
-import React,  { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import './Filter.css'; // Імпорт CSS файлу для стилізації
+import './Filter.css'; // Import CSS file for styling
 
-export const ArrivalDropdown = () => {
-    const [arrival, setArrival] = React.useState('');
-    const [data, setData] = useState([{}]);
+export const ArrivalDropdown = ({ history }) => {
+    const [arrival, setArrival] = useState('');
+    const [data, setData] = useState([]);
+
     useEffect(() => {
         fetch("http://localhost:5000/arrivals")
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
-                console.log(data);
-            });
+            })
+            .catch(error => console.error('Error fetching arrival data:', error));
     }, []);
+
     const handleChange = (event) => {
-        setArrival(event.target.value);
+        const selectedArrival = event.target.value;
+        setArrival(selectedArrival);
+        fetch(`http://localhost:5000/arrival_by_date?arrival=${selectedArrival}`)
+            .then(res => res.json())
+            .then(arrivalData => {
+                const queryString = `?arrival=${encodeURIComponent(JSON.stringify(arrivalData))}`;
+                window.location.href = '/' + queryString; // Redirect to the root URL with query string
+            })
+            .catch(error => console.error('Error fetching arrival data:', error));
     };
+    
 
     return (
         <div className="filter-container">
@@ -24,11 +35,11 @@ export const ArrivalDropdown = () => {
                 value={arrival}
                 onChange={handleChange}
                 displayEmpty
-                inputProps={{id: 'arrival-select'}}
-                className="arrival-dropdown" // Додано клас для стилізації
+                inputProps={{ id: 'arrival-select' }}
+                className="arrival-dropdown"
             >
                 <MenuItem value="" disabled>
-                    Оберіть заїзд
+                    Select Arrival
                 </MenuItem>
                 {data.map((arrival, index) => (
                     <MenuItem key={index} value={arrival.beginningDate}>
