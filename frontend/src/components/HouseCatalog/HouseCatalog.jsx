@@ -9,7 +9,8 @@ import { useLocation } from "react-router-dom"; // Import useLocation hook
 export const HouseCatalogue = () => {
     const [responseData, setResponseData] = useState(null);
     const location = useLocation(); // Initialize useLocation hook
-
+    const [arrival, setArrival] = useState(null); // State to hold arrival data
+    console.log(arrival)
     const handleClick = () => {
         fetch('http://localhost:5000/relocate')
           .then(response => response.json())
@@ -25,7 +26,8 @@ export const HouseCatalogue = () => {
     const [data, setData] = useState([{}]);
     useEffect(() => {
         const params = new URLSearchParams(location.search);
-        const arrival = params.get('arrival');
+        const arrival = params.get('arrival') || 1;
+        setArrival(arrival);  // Default arrival value is set to 1 if not provided
         fetch(`http://localhost:5000/houses?arrival=${arrival}`)
             .then((res) => res.json())
             .then((data) => {
@@ -43,7 +45,7 @@ export const HouseCatalogue = () => {
 
             <div className="houses-grid">
                 {data.map((house, idx) => (
-                    <HouseBlock key={idx} data={house}/>
+                    <HouseBlock key={idx} data={house} arrival={arrival}/>
                 ))}
             </div>
         </div>

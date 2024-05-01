@@ -2,8 +2,7 @@ import React from "react";
 import "./HouseBlock.css";
 import { Link } from "react-router-dom";
 
-export const HouseBlock = ({ data }) => {
-  console.log("hello from house")
+export const HouseBlock = ({ data, arrival}) => {
   return (
     <div className="main-container-house">
       {/*<div className='image-block'></div>*/}
@@ -30,7 +29,7 @@ export const HouseBlock = ({ data }) => {
           </div>
         </div>
         <hr className="hr-divider-house" />
-        <Link key={data.id} to={`/rooms/${data.id}`}>
+        <Link key={data.id} to={`/rooms/${arrival}/${data.id}`}>
           <button className="button-frame-house">
             <div className="button-house">
               <span className="view-text-house">Переглянути</span>

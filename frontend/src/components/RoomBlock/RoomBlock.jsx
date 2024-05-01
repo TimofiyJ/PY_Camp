@@ -1,7 +1,7 @@
 import React from 'react';
 import './RoomBlock.css';
 
-    export const RoomBlock = ({data}) => {
+    export const RoomBlock = ({data, arrival }) => {
         console.log(data);
         return (
             <div className='main-container'>

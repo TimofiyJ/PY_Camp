@@ -3,27 +3,23 @@ import './RoomCatalogue.css';
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-export const RoomCatalogue = ({}) => {
+export const RoomCatalogue = () => {
     const [roomdata, setData] = useState([]);
-    let { house } = useParams(); // Get houseId from URL
-    console.log(house)
+    const { arrival, house_id } = useParams();
+
+    console.log(arrival)
+    console.log(house_id)
+
     console.log("hello from rooms")
     useEffect(() => {
-        fetch(`http://localhost:5000/rooms?house=${house}`)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            return res.json();
-          })
-          .then((roomdata) => {
-            setData(roomdata);
-            console.log(roomdata);
-          })
-          .catch((error) => {
-            console.error("Fetch error:", error);
-          });
-    }, [house]); // Re-run effect when houseId changes
+        fetch(`http://localhost:5000/rooms?house=${house_id}&arrival=${arrival}`)
+        .then((res) => res.json())
+        .then((data) => {
+            setData(data);
+            console.log(data);
+        })
+        .catch((error) => console.error('Error fetching room data:', error));
+}, [house_id, arrival]);// Re-run effect when houseId changes
 
     return (
         <div>
@@ -32,6 +28,7 @@ export const RoomCatalogue = ({}) => {
                     <RoomBlock
                         key={idx}
                         data={room}
+                        arrival={arrival}
                     />
                 ))}
             </div>

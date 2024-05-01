@@ -22,7 +22,7 @@ export const ArrivalDropdown = ({ history }) => {
         fetch(`http://localhost:5000/arrival_by_date?arrival=${selectedArrival}`)
             .then(res => res.json())
             .then(arrivalData => {
-                const queryString = `?arrival=${encodeURIComponent(JSON.stringify(arrivalData))}`;
+                const queryString = `?arrival=${arrivalData}`;
                 window.location.href = '/' + queryString; // Redirect to the root URL with query string
             })
             .catch(error => console.error('Error fetching arrival data:', error));
