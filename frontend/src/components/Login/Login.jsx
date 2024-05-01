@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
 export const Login = () => {
-    const [username, setUsername] = useState('');
+    const [login, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
         // Запит POST на сервер для логіну
-        fetch('http://example.com/login', {
+        fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ login, password }),
         })
             .then(response => {
                 if (!response.ok) {
@@ -23,6 +23,8 @@ export const Login = () => {
             .then(data => {
                 // Обробка відповіді з сервера після успішного логіну
                 console.log('Login successful:', data);
+                // Redirect to home page
+                window.location.href = '/';
             })
             .catch(error => {
                 // Обробка помилки під час логіну
@@ -48,12 +50,12 @@ export const Login = () => {
             <Box sx={{marginBottom: '15px', width: '100%', textAlign: 'left'}}>
                 <label htmlFor="username" className="login-inputLabel">Логін</label>
                 <TextField
-                    id="username"
+                    id="login"
                     label="введіть логін"
                     variant="outlined"
                     sx={{width: '100%', borderRadius: '25px'}}
                     size="small"
-                    value={username}
+                    value={login}
                     onChange={(e) => setUsername(e.target.value)}
                 />
             </Box>

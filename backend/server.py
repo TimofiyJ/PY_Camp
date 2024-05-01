@@ -317,8 +317,8 @@ def relocate_algorithm(arrival):
             print(
                 f"Houses with total capacity {age_groups_b[age]}: {[house.name for house in result]}"
             )
-            c_id=0
-            cursor.execute(f"""SELECT "Client".id  
+            c_id=1
+            cursor.execute(f"""SELECT "Client".id, "Contact".sex   
                                     FROM "Client"
                                     INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
                                     INNER JOIN "Detachment" ON "Client"."detachmentId" = "Detachment".id
@@ -367,7 +367,7 @@ def relocate_algorithm(arrival):
             print(
                 f"Houses with total capacity {age_groups_g[age]}: {[house.name for house in result]}"
             )
-            c_id=0
+            c_id=1
             for house in result:
                 cursor.execute(f"""SELECT \"Bed\".id
                                  FROM \"Bed\"
@@ -395,6 +395,7 @@ def relocate_algorithm(arrival):
                                   """)
                     print(f"ID: {child_id[c_id][0]} MOVED TO {house.name}")
                     connection.commit()
+                    c_id +=1
                 if c_id==len(child_id):
                     break
             
@@ -438,6 +439,7 @@ def relocate_algorithm(arrival):
     response = []
     for c in clients:
         response.append({"id": c[0], "bedId": c[1]})
+    connection.commit()
     db_close(connection, cursor)
     return response
 
