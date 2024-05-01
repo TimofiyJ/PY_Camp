@@ -653,7 +653,15 @@ def free_bed(arrival):
         (arrival),
     )
     free_beds = cursor.fetchall()
-    return jsonify(free_beds)
+    response = []
+    for bed in free_beds:
+        r = {}
+        r["bed"] = bed[0]
+        r["room"] = bed[1]
+        r["house"] = bed[2]
+       
+        response.append(r)
+    return jsonify(response)
 
 
 

@@ -24,7 +24,7 @@ function App() {
               <Route path="/rooms/:arrival/:house/:room" element={<RoomChildrenPage/>} />
               <Route path="/childrens" element={<ChildrenPage/>} />
               <Route path='/supervisors' element={<SupervisorPage/>}></Route>
-              <Route path='/childProfile/:id' element={<ChildProfilePage/>}></Route>
+              <Route path='/childProfile/:arrival/:id' element={<ChildProfilePage/>}></Route>
               <Route path='/login' element={<LoginPage/>}></Route>
           </Routes>
       </BrowserRouter>

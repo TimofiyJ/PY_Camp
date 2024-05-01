@@ -18,7 +18,7 @@ const inputStyle = {
 };
 
 export const ChildProfile = () => {
-    const {id} = useParams();
+    const {arrival,id} = useParams();
     const [surname, setSurname] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -30,7 +30,7 @@ export const ChildProfile = () => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [data, setData] = useState([{}]);
     //const freePlaces = null;
-    const [freePlaces, setFreePlaces] = useState({});
+    const [free_beds, setFreePlaces] = useState([]);
 
     useEffect(() => {
         if (id) {
@@ -43,13 +43,15 @@ export const ChildProfile = () => {
         }
     }, [id]);
     useEffect(() => {
-        fetch(`http://localhost:5000/freeplaces`)
+        fetch(`http://localhost:5000/free_bed/${arrival}`)
             .then((res) => res.json())
-            .then((freePlaces) => {
-                setFreePlaces(freePlaces);
-                console.log(freePlaces);
-            });
-    }, [freePlaces]);
+            .then((free_beds) => {
+                setFreePlaces(free_beds);
+                console.log(free_beds);
+            })
+            .catch((error) => console.error('Error fetching free beds:', error));
+    }, [arrival]);
+    
 
     useEffect(() => {
         if (data) {
@@ -138,19 +140,19 @@ export const ChildProfile = () => {
                     </div>
 
                     <div className='fourth-column-inputs'>
-                        {freePlaces && <Box sx={{minWidth: 120, marginBottom: 2}}>
+                        {free_beds && <Box sx={{minWidth: 120, marginBottom: 2}}>
                             <FormControl fullWidth>
                                 <InputLabel id="freePlace-select-label">Будинок, кімната, ліжко</InputLabel>
                                 <Select
                                     labelId="freePlace-select-label"
                                     id="freePlace-select"
-                                    value={freePlaces.id || ''}
+                                    value={free_beds.id || ''}
                                     label="Будинок, кімната, ліжко"
                                     onChange={handleChange}
                                 >
-                                    {freePlaces.map(freePlace => (
-                                        <MenuItem key={freePlace.id} value={freePlace.id}>
-                                            {`${freePlace.house}, ${freePlace.room}, ${freePlace.bed}`} {/* Додайте комбінацію будинка, кімнати і ліжка */}
+                                    {free_beds.map(free_bed => (
+                                        <MenuItem key={free_bed.id} value={free_bed.id}>
+                                            {`${free_bed.house}, ${free_bed.room}, ${free_bed.bed}`} {/* Додайте комбінацію будинка, кімнати і ліжка */}
                                         </MenuItem>
                                     ))}
                                     <MenuItem value="">

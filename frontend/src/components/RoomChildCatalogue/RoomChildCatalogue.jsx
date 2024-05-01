@@ -115,7 +115,7 @@ export const RoomChildCatalogue = () => {
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
                                                 {column.id === 'action' ? (
-                                                    <Link to={`/childProfile/${row.id}`}>Переглянути</Link> // Посилання для переходу на child/id
+                                                    <Link to={`/childProfile/${arrival}/${row.id}`}>Переглянути</Link> // Посилання для переходу на child/id
                                                 ) : (
                                                     value
                                                 )}
