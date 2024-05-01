@@ -23,6 +23,14 @@ export const RoomDropdown = ({onRoomChange, selectedHouse}) => {
                 .catch((error) => {
                     console.error('Error fetching rooms:', error);
                 });
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching rooms:', error);
+            });
         }
     }, [selectedHouse]);
     const handleChange = (event) => {

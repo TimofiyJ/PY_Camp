@@ -119,7 +119,8 @@ def rooms_kids(room_id):
     rooms = cursor.fetchall()
     return rooms
 
-@app.route("/rooms_filter", methods=["POST"])
+  
+@app.route("/rooms-filter", methods=["POST"])
 def rooms_filter():
     print("At rooms")
     connection, cursor = db_connect()
@@ -140,7 +141,8 @@ def rooms_filter():
     db_close(connection, cursor)
     return response
 
-@app.route("/houses_filter")
+
+@app.route("/houses-filter")
 def houses_filer():
     connection, cursor = db_connect()
     cursor.execute('SELECT * FROM "House";')
@@ -155,7 +157,7 @@ def houses_filer():
     return response
 
 
-@app.route("/address_filter")
+@app.route("/address-filter")
 def address_filter():
     print("At rooms")
     connection, cursor = db_connect()
@@ -443,7 +445,10 @@ def allchildren(id):
         filter_values.append(age_filter)
         filter_values.append(str(int(age_filter)+3))
     if address_filter is not None:
-        query += " AND (C.adress ILIKE %s)"
+        query += " AND (EXTRACT(YEAR FROM AGE(C.\"birthDate\")) <= %s)"
+        filter_values.append(age_filter)
+    if address_filter is not None:
+        query += " AND (C.address ILIKE %s)"
         filter_values.append('%' + address_filter + '%')
     if house_filter is not None:
         query += " AND (H.name ILIKE %s)"
@@ -454,6 +459,7 @@ def allchildren(id):
     if surname_filter is not None:
         query += " AND (C.surname ILIKE %s)"
         filter_values.append('%' + surname_filter + '%')
+
 
     # Execute the query with filter values
     cursor.execute(query, filter_values)

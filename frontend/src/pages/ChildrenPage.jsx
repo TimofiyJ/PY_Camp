@@ -51,7 +51,7 @@ export const ChildrenPage = () => {
                         <HouseDropdown  onHouseChange={handleHouseChange}/>
                         <RoomDropdown  onRoomChange={handleRoomChange} selectedHouse={selectedHouse}/>
                     </div>
-                    <ChildCatalogue
+                    <ChildCatalogue 
                         selectedGender={selectedGender}
                         selectedAddress={selectedAddress}
                         selectedAge={selectedAge}
