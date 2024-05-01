@@ -1,0 +1,28 @@
+body {
+    overflow: hidden; /* Приховує скролінг на сторінці */
+    margin: 0; /* Забирає зовнішні відступи від тіла сторінки */
+    display: flex;
+    justify-content: center; /* Центрує контент по горизонталі */
+    align-items: center; /* Центрує контент по вертикалі */
+    min-height: 100vh;
+    background-color: #00104B;
+}
+
+.login-catalogueBlock {
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: #FAFBFC;
+    height: 450px; /* Задає фіксовану висоту блоку */
+    width: 550px; /* Задає фіксовану ширину блоку */
+    overflow: hidden; /* Відключає можливість прокрутки */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрує вміст по вертикалі */
+    align-items: center; /* Центрує вміст по горизонталі */
+    margin-top: 100px;
+}
+
+.login-catalogueBlock::-webkit-scrollbar {
+    display: none;
+}

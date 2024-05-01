@@ -109,6 +109,13 @@ export const ChildCatalogue = ({ selectedGender, selectedAddress, selectedAge, s
             },
             body: JSON.stringify(filters)
         })
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, [selectedGender, selectedAddress, selectedAge, selectedHouse, selectedRoom]);
+
         .then((res) => res.json())
         .then((data) => {
             setData(data);

@@ -15,6 +15,14 @@ export const RoomDropdown = ({onRoomChange, selectedHouse}) => {
                 },
                 body: JSON.stringify({ house: selectedHouse })
             })
+                .then((res) => res.json())
+                .then((data) => {
+                    setData(data);
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching rooms:', error);
+                });
             .then((res) => res.json())
             .then((data) => {
                 setData(data);

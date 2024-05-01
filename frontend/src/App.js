@@ -11,6 +11,7 @@ import {ChildrenPage} from "./pages/ChildrenPage";
 import {SupervisorPage} from "./pages/SupervisorPage";
 import {RoomChildrenPage} from "./pages/RoomChildrenPage";
 import {ChildProfilePage} from "./pages/ChildProfilePage";
+import {LoginPage} from "./pages/LoginPage";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/childrens" element={<ChildrenPage/>} />
               <Route path='/supervisors' element={<SupervisorPage/>}></Route>
               <Route path='/childProfile/:id' element={<ChildProfilePage/>}></Route>
+              <Route path='/login' element={<LoginPage/>}></Route>
           </Routes>
       </BrowserRouter>
     </div>
