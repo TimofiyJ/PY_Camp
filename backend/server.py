@@ -94,19 +94,27 @@ def rooms():
                    FROM "Room"\
                    INNER JOIN "House" ON "Room"."houseId"="House".id\
                    WHERE "House".id = {house_id};')
+
     rooms = cursor.fetchall()
-    print(rooms)
-    return rooms
+    response = []
+    for room in rooms:
+        element = {}
+        element["id"] = room[0]
+        element["number"] = room[1]
+        element["balcony"] = room[2]
+        element["floor"] = room[3]
+        element["houseId"] = room[4]
+        element["bedAmount"] = room[5]
+        response.append(element)
+    db_close(connection, cursor)
+    return response
 
-@app.route("/rooms/<room_id>", methods=["POST"])
-def rooms_kids(room_id):
-
+@app.route("/rooms/<arrival>/<house>/<room>")
+def rooms_kids(arrival,house,room):
+    print("rooms_kids")
     connection, cursor = db_connect()
-
-    data = request.get_json()
-    arrival_id=data["arrival_id"]
-
-    cursor.execute(f"""SELECT C.name, C.surname, C.sex, C."birthDate",B.number
+    print(arrival,house,room)
+    cursor.execute(f"""SELECT "Client".id, C.name, C.surname, C.sex, C."birthDate",C.adress,B.number
                     FROM "Client"
                     JOIN public."Contact" C on C.id = public."Client"."contactId"
                     JOIN public."Detachment" D on D.id = "Client"."detachmentId"
@@ -114,11 +122,23 @@ def rooms_kids(room_id):
                     JOIN public."Bed" B on B.id = "Client"."bedId"
                     JOIN public."Room" R on R.id = B."roomId"
                     JOIN public."House" H on H.id = R."houseId"
-                    WHERE A.id={arrival_id} AND R.id={room_id}
+                    WHERE A.id={arrival} AND R.id={room}
                     """)
-    
-    rooms = cursor.fetchall()
-    return rooms
+    kids = cursor.fetchall()
+    print(kids)
+    response = []
+    for kid in kids:
+        element = {}
+        element["surname"] = kid[2]
+        element["name"]= kid[1]
+        element["gender"] = kid[3]
+        element["birthday"] = kid[4].strftime("%d/%m/%Y")
+        element["address"] = kid[5]
+        element["bed"] = kid[6]
+        element["id"] = kid[0]
+        response.append(element)
+    db_close(connection, cursor)
+    return response
 
   
 @app.route("/rooms-filter", methods=["POST"])
@@ -212,10 +232,9 @@ def get_arrivals_by_date():
     print(arrivals)
     return jsonify(arrivals)
 
-@app.route("/relocate")
-def relocate_algorithm():
+@app.route("/relocate/<arrival>")
+def relocate_algorithm(arrival):
     print("AT RELOCATE")
-    arrival = 1
     connection, cursor = db_connect()
     cursor.execute('SELECT name FROM "House";')
     houses_names = cursor.fetchall()
@@ -299,14 +318,7 @@ def relocate_algorithm():
                 f"Houses with total capacity {age_groups_b[age]}: {[house.name for house in result]}"
             )
             c_id=0
-            for house in result:
-                cursor.execute(f"""SELECT \"Bed\".id
-                                 FROM \"Bed\"
-                                 JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
-                                 JOIN public.\"House\" H on H.id = R.\"houseId\"
-                                 WHERE H.name = '{house.name}'""")
-                bed_ids = cursor.fetchall()
-                cursor.execute(f"""SELECT "Client".id  
+            cursor.execute(f"""SELECT "Client".id  
                                     FROM "Client"
                                     INNER JOIN "Contact" ON "Client"."contactId" = "Contact".id
                                     INNER JOIN "Detachment" ON "Client"."detachmentId" = "Detachment".id
@@ -316,8 +328,16 @@ def relocate_algorithm():
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} <= 3
                                     AND EXTRACT(YEAR FROM AGE("Contact"."birthDate")) - {age} >=0;
                                 """)
-                child_id = cursor.fetchall()
+            child_id = cursor.fetchall()
+            print(child_id)
 
+            for house in result:
+                cursor.execute(f"""SELECT \"Bed\".id
+                                 FROM \"Bed\"
+                                 JOIN public.\"Room\" R on R.id = \"Bed\".\"roomId\"
+                                 JOIN public.\"House\" H on H.id = R.\"houseId\"
+                                 WHERE H.name = '{house.name}'""")
+                bed_ids = cursor.fetchall()
                 for j in range(len(bed_ids)):
                     if c_id==len(child_id):
                         break
@@ -325,11 +345,11 @@ def relocate_algorithm():
                                         SET "bedId"={bed_ids[j][0]}
                                         WHERE id={child_id[c_id][0]};
                                   """)
-
+                    connection.commit()
+                    print(f"ID: {child_id[c_id][0]} MOVED TO {house.name}")
                     c_id = c_id+1
                 if c_id==len(child_id):
                     break
-                connection.commit()
             
             unassigned_children.extend(children[c_id:])
 
@@ -373,9 +393,10 @@ def relocate_algorithm():
                                         SET "bedId"={bed_ids[j][0]}
                                         WHERE id={child_id[c_id][0]};
                                   """)
+                    print(f"ID: {child_id[c_id][0]} MOVED TO {house.name}")
+                    connection.commit()
                 if c_id==len(child_id):
                     break
-                connection.commit()
             
             unassigned_children.extend(children[c_id:])
 
@@ -384,6 +405,7 @@ def relocate_algorithm():
                 f"No combination of houses found with total capacity {age_groups_g[age]}."
             )
             unassigned_children.extend(children[c_id:])
+    connection.commit()
 
     if unassigned_children:
         # Get all free beds

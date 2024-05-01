@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,13 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import {useContext} from 'react';
+import { useParams } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 const columns = [
-    {
-        id: 'bed',
-        label: <b style={{ color: '#1D2E54'}}>Ліжко</b>,
-        minWidth: 100,
-    },
     {
         id: 'surname',
         label: <b style={{ color: '#1D2E54'}}>Прізвище</b>, // Встановлення коліру тексту та фону
@@ -42,6 +39,11 @@ const columns = [
         minWidth: 100,
     },
     {
+        id: 'bed',
+        label: <b style={{ color: '#1D2E54'}}>Ліжко</b>,
+        minWidth: 100,
+    },
+    {
         id: 'action',
         label: '',
         minWidth: 100,
@@ -49,8 +51,8 @@ const columns = [
     },
 ];
 
-function createData(bed, surname, name, gender, birthday, address, action) {
-    return { bed, surname, name, gender, birthday, address, action };
+function createData(surname, name, gender, birthday,bed, address, action) {
+    return {surname, name, gender, birthday,bed, address, action };
 }
 
 const rows = [
@@ -73,6 +75,18 @@ const rows = [
 ];
 
 export const RoomChildCatalogue = () => {
+    const { arrival, house, room } = useParams();
+    console.log("AA")
+    console.log(arrival, house, room);
+    const [data, setData] = useState([{}]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/rooms/${arrival}/${house}/${room}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            });
+    }, []);
     return (
         <div className="contaner-with-table">
             <Paper sx={{minWidth: 1134, overflow: 'hidden' }}>
@@ -92,20 +106,22 @@ export const RoomChildCatalogue = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
+                            {data
                                 .map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
+                                        {columns.map((column) => {
+                                            const value = row[column.id];
+                                            return (
+                                                <TableCell key={column.id} align={column.align}>
+                                                {column.id === 'action' ? (
+                                                    <Link to={`/childProfile/${row.id}`}>Переглянути</Link> // Посилання для переходу на child/id
+                                                ) : (
+                                                    value
+                                                )}
+                                            </TableCell>
+                                            );
+                                        })}
                                         </TableRow>
                                     );
                                 })}

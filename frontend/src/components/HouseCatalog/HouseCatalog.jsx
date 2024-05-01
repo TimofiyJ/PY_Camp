@@ -12,7 +12,7 @@ export const HouseCatalogue = () => {
     const [arrival, setArrival] = useState(null); // State to hold arrival data
     console.log(arrival)
     const handleClick = () => {
-        fetch('http://localhost:5000/relocate')
+        fetch(`http://localhost:5000/relocate/${arrival}`)
           .then(response => response.json())
           .then(data => {
             // Update state with response data
